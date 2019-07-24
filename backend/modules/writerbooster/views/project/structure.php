@@ -38,6 +38,44 @@ $this->params['breadcrumbs'][] = 'Update';
 
 
 
+
+<div class="box">
+<div class="box-header"><div class="box-title"><?=$model->title?></div></div>
+<div class="box-body">
+
+<?=$model->description?>
+<br /><br />
+<h4>CONTENT STRUCTURE</h4>
+
+<?php 
+
+if($model->structure){
+	foreach($model->structure as $con){
+		echo '<div class="form-group"><a href="#"><h3><b><span class="cancel">' . $con->numbering  . '. </span> ' . $con->text . '</b></h3></a></div>';
+		if($con->children){
+			foreach($con->children as $ch1){
+				echo '<div class="form-group" style="margin-left:'.$ch1->margin .'px"><a href="#"><h4><span class="cancel">' . $ch1->numbering . '</span> ' . $ch1->text . '</h4></a></div>';
+				
+				if($ch1->children){
+					foreach($ch1->children as $ch2){
+						echo '<div class="form-group" style="margin-left:'.$ch2->margin .'px"><a href="#"><h4><span class="cancel">' . $ch2->numbering . '</span> ' . $ch2->text . '</h4></a></div>';
+					}
+				}
+			}
+		}
+	}
+	
+}
+
+?>
+
+
+</div>
+</div>
+
+
+
+
 <?php JSRegister::begin(['position' => static::POS_BEGIN]); ?>
 <script>
 	
