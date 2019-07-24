@@ -43,13 +43,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'visible' => false,
                 'buttons'=>[
 					'writing'=>function ($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-pencil"></span> Writing',['/writerbooster/project/write/', 'id' => $model->id],['class'=>'btn btn-success btn-sm']);
+                        return Html::a('<span class="glyphicon glyphicon-pencil"></span> Writing',['/apps/project/structure/', 'id' => $model->id],['class'=>'btn btn-success btn-sm']);
                     },
 					'report'=>function ($url, $model) {
-                        return Html::a('<span class="fa fa-bar-chart"></span> Report',['/writerbooster/project/report/', 'id' => $model->id],['class'=>'btn btn-info btn-sm']);
+                        return Html::a('<span class="fa fa-bar-chart"></span> Report',['/apps/project/report/', 'id' => $model->id],['class'=>'btn btn-info btn-sm']);
                     },
                     'setting'=>function ($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-cog"></span> Setting',['/writerbooster/project/update/', 'id' => $model->id],['class'=>'btn btn-warning btn-sm']);
+                        return Html::a('<span class="glyphicon glyphicon-cog"></span> Setting',['/apps/project/update/', 'id' => $model->id],['class'=>'btn btn-warning btn-sm']);
                     },
 					'delete'=>function ($url, $model) {
                         return Html::a('<span class="glyphicon glyphicon-trash"></span>',['/website/event/delete-event/', 'id' => $model->id],['class'=>'btn btn-danger btn-sm', 'data' => [

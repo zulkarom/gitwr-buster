@@ -8,7 +8,7 @@ use backend\modules\writerbooster\models\ProjectSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\filters\AccessControl;
 /**
  * ProjectController implements the CRUD actions for Project model.
  */
@@ -17,17 +17,23 @@ class ProjectController extends Controller
     /**
      * @inheritdoc
      */
-    public function behaviors()
+    
+
+	public function behaviors()
     {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
         ];
     }
+
 
     /**
      * Lists all Project models.
@@ -113,6 +119,22 @@ class ProjectController extends Controller
         $model = $this->findModel($id);
 		
         return $this->render('counter', [
+            'model' => $model,
+        ]);
+		
+    }
+	
+	public function actionStructure($id)
+    {
+        $model = $this->findModel($id);
+		$model->scenario = 'content';
+		
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			Yii::$app->session->addFlash('success', "Data Updated");
+            return $this->redirect(['write', 'id' => $model->id]);
+        }
+		
+        return $this->render('structure', [
             'model' => $model,
         ]);
 		
