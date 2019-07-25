@@ -69,7 +69,7 @@ class ProjectContentController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($project_id, $type)
+    public function actionCreate($project_id)
     {
         $model = new ProjectContent();
 		
@@ -77,7 +77,7 @@ class ProjectContentController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
 			$model->project_id = $project_id;
-			$model->ct_type = $type;
+			$model->ct_type = 1;
 			$model->created_at = new Expression('NOW()');
 			$model->updated_at = new Expression('NOW()');
 			if($model->save()){
@@ -90,6 +90,32 @@ class ProjectContentController extends Controller
         }
 
         return $this->render('create', [
+            'model' => $model,
+			'project' => $project
+        ]);
+    }
+	
+	public function actionCreatePara($project_id)
+    {
+        $model = new ProjectContent();
+		
+		$project = $this->findProject($project_id);
+
+        if ($model->load(Yii::$app->request->post())) {
+			$model->project_id = $project_id;
+			$model->ct_type = 2;
+			$model->created_at = new Expression('NOW()');
+			$model->updated_at = new Expression('NOW()');
+			if($model->save()){
+				Yii::$app->session->addFlash('success', "Data Updated");
+				 return $this->redirect(['/apps/project/structure/', 'id' => $project_id]);
+			}else{
+				$model->flashError();
+			}
+           
+        }
+
+        return $this->render('create-para', [
             'model' => $model,
 			'project' => $project
         ]);
@@ -141,11 +167,11 @@ class ProjectContentController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete($project_id, $id)
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['/apps/project/structure/', 'id' => $project_id]);
     }
 
     /**

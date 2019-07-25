@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = 'Update';
 <h2>Title: <?=$model->title?></h2>
 <?=$model->description?>
 <br /><br />
-<div><a href="<?=Url::to(['/apps/project-content/create', 'project_id' => $model->id, 'type' => 1])?>" class="btn btn-success">Add Heading</a> <a href="<?=Url::to(['/apps/project-content/create', 'project_id' => $model->id, 'type' => 2])?>" class="btn btn-success">Add Paragraph</a></div>
+<div><a href="<?=Url::to(['/apps/project-content/create', 'project_id' => $model->id, 'type' => 1])?>" class="btn btn-success">Add Heading</a> <a href="<?=Url::to(['/apps/project-content/create-para', 'project_id' => $model->id, 'type' => 2])?>" class="btn btn-success">Add Paragraph</a></div>
 
 <?php 
 if($model->structure){

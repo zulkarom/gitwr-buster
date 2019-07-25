@@ -56,6 +56,7 @@ class ProjectContent extends \yii\db\ActiveRecord
             'project_id' => 'Project',
             'ct_parent' => 'Parent',
             'ct_text' => 'Focus Statement',
+			'ct_desc' => 'Description',
             'ct_type' => 'Ct Type',
             'ct_order' => 'Ct Order',
             'created_at' => 'Created At',

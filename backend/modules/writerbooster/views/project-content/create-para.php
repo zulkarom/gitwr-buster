@@ -2,15 +2,15 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+
 /* @var $this yii\web\View */
 /* @var $model backend\modules\writerbooster\models\ProjectContent */
 
-$this->title = 'Update Paragraph: ' . $model->ct_text;
+$this->title = 'Create New Paragraph';
 $this->params['breadcrumbs'][] = ['label' => 'Project Contents', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="project-content-update">
+<div class="project-content-create">
 
 <div class="box">
 <div class="box-header"></div>
@@ -32,19 +32,10 @@ $this->params['breadcrumbs'][] = 'Update';
 
 <div class="row">
 <div class="col-md-6"><div class="form-group">
-	<?= Html::submitButton('<span class="glyphicon glyphicon-floppy-disk"></span> Save Paragraph', ['class' => 'btn btn-success']) ?>
+	<?= Html::submitButton('Next <span class="glyphicon glyphicon-arrow-right"></span>', ['class' => 'btn btn-success']) ?>
 </div></div>
 
-<div class="col-md-6" align="right">
-<?= Html::a('Delete', ['delete', 'project_id' => $project->id, 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this paragraph?',
-                'method' => 'post',
-            ],
-        ]) ?>
 
-</div>
 
 </div>
 
@@ -55,6 +46,5 @@ $this->params['breadcrumbs'][] = 'Update';
 </div>
 </div>
 </div>
-
 
 </div>
