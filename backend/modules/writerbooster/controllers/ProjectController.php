@@ -140,6 +140,10 @@ class ProjectController extends Controller
 		
     }
 	
+	public function actionAddHeading($id){
+		
+	}
+	
 	public function actionWrite($id)
     {
         $model = $this->findModel($id);

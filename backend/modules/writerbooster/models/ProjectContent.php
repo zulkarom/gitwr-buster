@@ -34,9 +34,13 @@ class ProjectContent extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['project_id', 'ct_parent', 'ct_text', 'ct_type', 'ct_order', 'created_at', 'updated_at'], 'required'],
+            [['project_id', 'ct_parent', 'ct_text', 'ct_type', 'created_at', 'updated_at'], 'required'],
+			
+			
             [['project_id', 'ct_parent', 'ct_type', 'ct_order'], 'integer'],
-            [['ct_text'], 'string'],
+			
+            [['ct_text', 'ct_desc'], 'string'],
+			
             [['created_at', 'updated_at'], 'safe'],
             [['project_id'], 'exist', 'skipOnError' => true, 'targetClass' => Project::className(), 'targetAttribute' => ['project_id' => 'id']],
         ];
@@ -49,9 +53,9 @@ class ProjectContent extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'project_id' => 'Project ID',
-            'ct_parent' => 'Ct Parent',
-            'ct_text' => 'Ct Text',
+            'project_id' => 'Project',
+            'ct_parent' => 'Parent',
+            'ct_text' => 'Focus Statement',
             'ct_type' => 'Ct Type',
             'ct_order' => 'Ct Order',
             'created_at' => 'Created At',
@@ -68,6 +72,20 @@ class ProjectContent extends \yii\db\ActiveRecord
     }
 	
 	public function getChildren(){
-		 return $this->hasMany(ProjectContent::className(), ['ct_parent' => 'id']);
+		 return $this->hasMany(ProjectContent::className(), ['ct_parent' => 'id'])->orderBy('ct_order ASC');
 	}
+	
+	public function flashError(){
+        if($this->getErrors()){
+            foreach($this->getErrors() as $error){
+                if($error){
+                    foreach($error as $e){
+                        Yii::$app->session->addFlash('error', $e);
+                    }
+                }
+            }
+        }
+
+    }
+
 }
