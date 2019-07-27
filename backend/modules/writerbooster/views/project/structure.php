@@ -62,19 +62,19 @@ $this->params['breadcrumbs'][] = 'Update';
 <h2>Title: <?=$model->title?></h2>
 <?=$model->description?>
 <br /><br />
-<div><a href="<?=Url::to(['/apps/project-content/create', 'project_id' => $model->id, 'type' => 1])?>" class="btn btn-success">Add Heading</a> <a href="<?=Url::to(['/apps/project-content/create-para', 'project_id' => $model->id, 'type' => 2])?>" class="btn btn-success">Add Paragraph</a></div>
+<div><a href="<?=Url::to(['/apps/project-content/create', 'project_id' => $model->id, 'type' => 1])?>" class="btn btn-success">Add Heading</a> <a href="<?=Url::to(['/apps/project-content/create-para', 'project_id' => $model->id])?>" class="btn btn-success">Add Paragraph</a></div>
 
 <?php 
 if($model->structure){
 	foreach($model->structure as $con){
-		echo '<div class="form-group"><a href="'.Url::to(['/apps/project-content/' . $con->action, 'id' => $con->id ,'project_id' => $model->id, 'type' => $con->type]).'"><h3><b><span class="cancel">' . $con->numbering  . ' </span> ' . $con->text . '</b></h3></a></div>';
+		echo '<div class="form-group"><a href="'.Url::to(['/apps/project-content/' . $con->action, 'id' => $con->id ,'project_id' => $model->id]).'"><h3><b><span class="cancel">' . $con->numbering  . ' </span> ' . $con->text . '</b></h3></a></div>';
 		if($con->children){
 			foreach($con->children as $ch1){
-				echo '<div class="form-group" style="margin-left:'.$ch1->margin .'px"><a href="'.Url::to(['/apps/project-content/' . $ch1->action, 'id' => $ch1->id ,'project_id' => $model->id, 'type' => $con->type]).'"><h4><span class="cancel">' . $ch1->numbering . '</span> ' . $ch1->text . '</h4></a></div>';
+				echo '<div class="form-group" style="margin-left:'.$ch1->margin .'px"><a href="'.Url::to(['/apps/project-content/' . $ch1->action, 'id' => $ch1->id ,'project_id' => $model->id]).'"><h4><span class="cancel">' . $ch1->numbering . '</span> ' . $ch1->text . '</h4></a></div>';
 				
 				if($ch1->children){
 					foreach($ch1->children as $ch2){
-						echo '<div class="form-group" style="margin-left:'.$ch2->margin .'px"><a href="'.Url::to(['/apps/project-content/' . $ch2->action, 'id' => $ch2->id ,'project_id' => $model->id, 'type' => $con->type]).'"><h4><span class="cancel">' . $ch2->numbering . '</span> ' . $ch2->text . '</h4></a></div>';
+						echo '<div class="form-group" style="margin-left:'.$ch2->margin .'px"><a href="'.Url::to(['/apps/project-content/' . $ch2->action, 'id' => $ch2->id ,'project_id' => $model->id]).'"><h4><span class="cancel">' . $ch2->numbering . '</span> ' . $ch2->text . '</h4></a></div>';
 						if($ch2->children){
 							foreach($ch2->children as $ch3){
 								echo '<div class="form-group" style="margin-left:'.$ch3->margin .'px"><a href="'.Url::to(['/apps/project-content/'.$ch3->action , 'id' => $ch3->id ,'project_id' => $model->id]).'"><h4><span class="cancel">' . $ch3->numbering . '</span> ' . $ch3->text . '</h4></a></div>';

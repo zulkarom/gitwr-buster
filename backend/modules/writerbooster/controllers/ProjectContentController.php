@@ -4,6 +4,7 @@ namespace backend\modules\writerbooster\controllers;
 
 use Yii;
 use backend\modules\writerbooster\models\ProjectContent;
+use backend\modules\writerbooster\models\ProjectPara;
 use backend\modules\writerbooster\models\Project;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -98,25 +99,43 @@ class ProjectContentController extends Controller
 	public function actionCreatePara($project_id)
     {
         $model = new ProjectContent();
-		
+		$para = new ProjectPara;
 		$project = $this->findProject($project_id);
 
-        if ($model->load(Yii::$app->request->post())) {
-			$model->project_id = $project_id;
-			$model->ct_type = 2;
-			$model->created_at = new Expression('NOW()');
-			$model->updated_at = new Expression('NOW()');
-			if($model->save()){
-				Yii::$app->session->addFlash('success', "Data Updated");
-				 return $this->redirect(['/apps/project/structure/', 'id' => $project_id]);
-			}else{
-				$model->flashError();
+        if ($model->load(Yii::$app->request->post()) && $para->load(Yii::$app->request->post())) {
+			$transaction = Yii::$app->db->beginTransaction();
+			try {
+				$model->project_id = $project_id;
+				$model->ct_type = 2;
+				$model->created_at = new Expression('NOW()');
+				$model->updated_at = new Expression('NOW()');
+				if($model->save()){
+					$para->content_id = $model->id;
+					$para->created_at = new Expression('NOW()');
+					$para->updated_at = new Expression('NOW()');
+					$para->save();
+					Yii::$app->session->addFlash('success', "Data Updated");
+					 
+				}else{
+					$model->flashError();
+				}
+				
+				$transaction->commit();
+				return $this->redirect(['/apps/project-content/update-para/', 'id' => $model->id, 'project_id' => $project_id]);
 			}
+			catch (Exception $e) 
+			{
+				$transaction->rollBack();
+				Yii::$app->session->addFlash('error', $e->getMessage());
+			}
+
+			
            
         }
 
         return $this->render('create-para', [
             'model' => $model,
+			'para' => $para,
 			'project' => $project
         ]);
     }
@@ -147,16 +166,39 @@ class ProjectContentController extends Controller
 	public function actionUpdatePara($id, $project_id)
     {
         $model = $this->findModel($id);
+		$para = $model->para;
 		$project = $this->findProject($project_id);
 
-        if ($model->load(Yii::$app->request->post())) {
-			$model->save();
-            return $this->redirect(['/apps/project/structure/', 'id' => $project_id]);
+        if ($model->load(Yii::$app->request->post()) && $para->load(Yii::$app->request->post())) {
+			$transaction = Yii::$app->db->beginTransaction();
+			try {
+				$model->updated_at = new Expression('NOW()');
+				if($model->save()){
+					$para->updated_at = new Expression('NOW()');
+					$para->save();
+					Yii::$app->session->addFlash('success', "Data Updated");
+					 
+				}else{
+					$model->flashError();
+				}
+				
+				$transaction->commit();
+				return $this->redirect(['/apps/project-content/update-para/', 'id' => $model->id, 'project_id' => $project_id]);
+			}
+			catch (Exception $e) 
+			{
+				$transaction->rollBack();
+				Yii::$app->session->addFlash('error', $e->getMessage());
+			}
+
+			
+           
         }
 
         return $this->render('update-para', [
             'model' => $model,
 			'project' => $project,
+			'para' => $para
         ]);
     }
 
@@ -169,7 +211,9 @@ class ProjectContentController extends Controller
      */
     public function actionDelete($project_id, $id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+		$model->ct_active = 0;
+		$model->save();
 
         return $this->redirect(['/apps/project/structure/', 'id' => $project_id]);
     }

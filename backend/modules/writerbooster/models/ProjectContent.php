@@ -72,8 +72,13 @@ class ProjectContent extends \yii\db\ActiveRecord
         return $this->hasOne(Project::className(), ['id' => 'project_id']);
     }
 	
+	public function getPara()
+    {
+        return $this->hasOne(ProjectPara::className(), ['content_id' => 'id']);
+    }
+	
 	public function getChildren(){
-		 return $this->hasMany(ProjectContent::className(), ['ct_parent' => 'id'])->orderBy('ct_order ASC');
+		 return $this->hasMany(ProjectContent::className(), ['ct_parent' => 'id'])->where(['ct_active' => 1])->orderBy('ct_order ASC');
 	}
 	
 	public function flashError(){

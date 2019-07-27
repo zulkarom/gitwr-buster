@@ -68,7 +68,7 @@ class Project extends \yii\db\ActiveRecord
 	
 	public function getMainContents()
     {
-        return $this->hasMany(ProjectContent::className(), ['project_id' => 'id'])->where(['ct_parent' => 0]);
+        return $this->hasMany(ProjectContent::className(), ['project_id' => 'id'])->where(['ct_parent' => 0, 'ct_active' => 1]);
     }
 
 	
