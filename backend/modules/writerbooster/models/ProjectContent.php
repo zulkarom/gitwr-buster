@@ -34,10 +34,10 @@ class ProjectContent extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['project_id', 'ct_parent', 'ct_text', 'ct_type', 'created_at', 'updated_at'], 'required'],
+            [['project_id', 'ct_parent', 'ct_text', 'ct_type', 'created_by', 'created_at', 'updated_at'], 'required'],
 			
 			
-            [['project_id', 'ct_parent', 'ct_type', 'ct_order'], 'integer'],
+            [['project_id', 'ct_parent', 'ct_type', 'ct_order', 'created_by'], 'integer'],
 			
             [['ct_text', 'ct_desc'], 'string'],
 			

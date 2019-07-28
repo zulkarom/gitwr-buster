@@ -81,6 +81,7 @@ class ProjectContentController extends Controller
 			$model->project_id = $project_id;
 			$model->ct_type = 1;
 			$model->created_at = new Expression('NOW()');
+			$model->created_by = Yii::$app->user->identity->id;
 			$model->updated_at = new Expression('NOW()');
 			if($model->save()){
 				Yii::$app->session->addFlash('success', "Data Updated");
@@ -109,6 +110,7 @@ class ProjectContentController extends Controller
 				$model->project_id = $project_id;
 				$model->ct_type = 2;
 				$model->created_at = new Expression('NOW()');
+				$model->created_by = Yii::$app->user->identity->id;
 				$model->updated_at = new Expression('NOW()');
 				if($model->save()){
 					$para->content_id = $model->id;

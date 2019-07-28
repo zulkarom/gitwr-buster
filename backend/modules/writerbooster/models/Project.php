@@ -300,6 +300,45 @@ class Project extends \yii\db\ActiveRecord
 		}
 	}
 	
+	public function countContentByUser($user_id){
+		$result = ProjectContent::find()
+		->where(['project_id' => $this->id, 'ct_active' => 1, 'created_by' => $user_id])
+		->count();
+		
+		if($result){
+			return $result;
+		}else{
+			return 0;
+		}
+	}
+	
+	public function countComment(){
+		$result = ProjectContent::find()
+		->where(['project_content.project_id' => $this->id, 'project_content.ct_active' => 1])
+		->innerJoin('project_para', 'project_para.content_id = project_content.id')
+		->innerJoin('para_comment', 'para_comment.para_id = project_para.id')
+		->count();
+		
+		if($result){
+			return $result;
+		}else{
+			return 0;
+		}
+	}
+	public function countCommentByUser($user_id){
+		$result = ProjectContent::find()
+		->innerJoin('project_para', 'project_para.content_id = project_content.id')
+		->innerJoin('para_comment', 'para_comment.para_id = project_para.id')
+		->where(['project_content.project_id' => $this->id, 'project_content.ct_active' => 1, 'para_comment.user_id' => $user_id])
+		->count();
+		
+		if($result){
+			return $result;
+		}else{
+			return 0;
+		}
+	}
+	
 	public function getArrayHeading(){
 		$array = array();
 		$array[0] = 'No Parent';

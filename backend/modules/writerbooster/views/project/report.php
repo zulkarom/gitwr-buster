@@ -45,6 +45,33 @@ $this->params['breadcrumbs'][] = 'Update';
 <div class="col-md-6">
 <h3>Total Heading: <span><?=$model->countHead()?></span></h3>
 <h3>Total Paragraph: <span><?=$model->countPara()?></span></h3>
+<h3>Total Comment: <span><?=$model->countComment()?></span></h3>
+</div>
+
+</div>
+
+<div class="row">
+<div class="col-md-6">
+<div class="form-group"><?php 
+	
+	if($model->collaborations){
+		echo '<table class="table table-stripped">';
+		$i = 1;
+		foreach($model->collaborations as $col){
+			echo '<tr><td>'.$i.'. </td>
+			<td>'.$col->user->fullname .'</td>
+			
+			</tr>';
+		$i++;
+		}
+		echo '</table>';
+	}
+	
+	?></div>
+
+</div>
+
+<div class="col-md-6">
 </div>
 
 </div>

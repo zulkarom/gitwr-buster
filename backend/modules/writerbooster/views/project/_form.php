@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 	
 	<div class="row">
-<div class="col-md-6"><?= $form->field($model, 'status')->dropDownList( [1 => 'Completed' , 0 => 'In Progress'] ) ?></div>
+<div class="col-md-6"><?= $form->field($model, 'status')->dropDownList( [0 => 'In Progress', 1 => 'Completed'] ) ?></div>
 
 <div class="col-md-6">
 <?= $form->field($model, 'default_session')->textInput() ?>

@@ -99,7 +99,33 @@ class ProjectController extends Controller
     {
         $model = new Project();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+			$transaction = Yii::$app->db->beginTransaction();
+			$model->user_id = Yii::$app->user->identity->id;
+			try {
+				if($model->save()){
+					$colla = new Collaboration;
+					$colla->project_id = $model->id;
+					$colla->user_id = Yii::$app->user->identity->id;
+					$colla->is_owner = 1;
+					$colla->created_at = new Expression('NOW()');
+					$colla->proj_start = time();
+					if($colla->save()){
+						$transaction->commit();
+					}
+				}
+				
+				
+				
+			}
+			catch (Exception $e) 
+			{
+				$transaction->rollBack();
+				Yii::$app->session->addFlash('error', $e->getMessage());
+			}
+
+			
+			
             return $this->redirect(['index']);
         }
 
