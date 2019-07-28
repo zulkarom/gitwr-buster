@@ -129,10 +129,12 @@ echo $form->field($colla, 'user_id')->widget(Select2::classname(), [
  ?>
 
 
+<?= Html::submitButton("<span class='glyphicon glyphicon-plus'></span> Add Collaboration", ['class' => 'btn btn-primary btn-sm']) ?>
+
 
     <?php ActiveForm::end(); ?>
 
-<div><a href="#" class="btn btn-success"><span class='glyphicon glyphicon-plus'></span> Add Collaboration</a></div>
+
 
 <br />
 <div class="form-group"><?php 
@@ -143,7 +145,15 @@ echo $form->field($colla, 'user_id')->widget(Select2::classname(), [
 		foreach($model->collaborations as $col){
 			echo '<tr><td>'.$i.'. </td>
 			<td>'.$col->user->fullname .'</td>
-			<td><span class="glyphicon glyphicon-remove"></span> </td>
+			<td>'.
+			Html::a('<span class="glyphicon glyphicon-remove"></span>', ['/apps/project/delete-colla', 'id' => $col->id], [
+            'data' => [
+                'confirm' => 'Are you sure you want to remove this user?',
+                'method' => 'post',
+            ],
+        ])
+			
+			.'</td>
 			</tr>';
 		$i++;
 		}

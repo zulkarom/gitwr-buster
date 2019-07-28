@@ -53,13 +53,10 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@backend/views/myass
                         'url' => '#',
                         'items' => [
 						
-							['label' => 'List of Project', 'icon' => 'cubes', 'url' => ['/apps/project/index'],],
-
-                            ['label' => 'Project Report', 'icon' => 'bar-chart', 'url' => ['/apps/project/list-view'],],
-
+							['label' => 'My Project', 'icon' => 'cubes', 'url' => ['/apps/project/index'],],
 							
+							['label' => 'My Collaboration', 'icon' => 'users', 'url' => ['/apps/project/colla'],],
 	
-							
 
                         ],
                     ],

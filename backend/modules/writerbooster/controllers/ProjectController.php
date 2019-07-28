@@ -10,6 +10,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\db\Expression;
 /**
  * ProjectController implements the CRUD actions for Project model.
  */
@@ -46,6 +47,17 @@ class ProjectController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+	
+	public function actionColla()
+    {
+        $searchModel = new CollaSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('collaboration', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -129,12 +141,15 @@ class ProjectController extends Controller
 	public function actionStructure($id)
     {
         $model = $this->findModel($id);
-		$model->scenario = 'content';
 		$colla = new Collaboration;
 		
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			Yii::$app->session->addFlash('success', "Data Updated");
-            return $this->redirect(['write', 'id' => $model->id]);
+        if ($colla->load(Yii::$app->request->post())) {
+			$colla->project_id = $model->id;
+			$colla->created_at = new Expression('NOW()');
+			if($colla->save()){
+				Yii::$app->session->addFlash('success', "Data Updated");
+				return $this->redirect(['structure', 'id' => $model->id]);
+			}
         }
 		
         return $this->render('structure', [
@@ -177,6 +192,15 @@ class ProjectController extends Controller
 
         return $this->redirect(['index']);
     }
+	
+	public function actionDeleteColla($id)
+    {
+        $colla = $this->findColla($id);
+		$colla->delete();
+		$project = $colla->project->id;
+
+        return $this->redirect(['structure', 'id'=>$project]);
+    }
 
     /**
      * Finds the Project model based on its primary key value.
@@ -188,6 +212,15 @@ class ProjectController extends Controller
     protected function findModel($id)
     {
         if (($model = Project::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+	
+	protected function findColla($id)
+    {
+        if (($model = Collaboration::findOne($id)) !== null) {
             return $model;
         }
 

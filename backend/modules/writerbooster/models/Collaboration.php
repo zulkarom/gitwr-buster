@@ -33,6 +33,7 @@ class Collaboration extends \yii\db\ActiveRecord
     {
         return [
             [['project_id', 'user_id', 'created_at'], 'required'],
+			
             [['project_id', 'user_id'], 'integer'],
             [['created_at'], 'safe'],
             [['project_id'], 'exist', 'skipOnError' => true, 'targetClass' => Project::className(), 'targetAttribute' => ['project_id' => 'id']],

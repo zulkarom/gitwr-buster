@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         return Html::a('<span class="glyphicon glyphicon-cog"></span> Setting',['/apps/project/update/', 'id' => $model->id],['class'=>'btn btn-warning btn-sm']);
                     },
 					'delete'=>function ($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-trash"></span>',['/website/event/delete-event/', 'id' => $model->id],['class'=>'btn btn-danger btn-sm', 'data' => [
+                        return Html::a('<span class="glyphicon glyphicon-trash"></span>',['/apps/project/delete', 'id' => $model->id],['class'=>'btn btn-danger btn-sm', 'data' => [
                 'confirm' => 'Are you sure to delete this event?'
             ],
 ]);
