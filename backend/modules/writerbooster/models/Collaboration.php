@@ -32,9 +32,9 @@ class Collaboration extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['project_id', 'user_id', 'created_at', 'proj_start'], 'required'],
+            [['project_id', 'user_id', 'created_at', 'proj_start', 'proj_end'], 'required'],
 			
-            [['project_id', 'user_id', 'is_owner', 'proj_start', 'pomo_count'], 'integer'],
+            [['project_id', 'user_id', 'is_owner', 'proj_start', 'proj_end', 'pomo_count'], 'integer'],
 			
             [['created_at'], 'safe'],
             [['project_id'], 'exist', 'skipOnError' => true, 'targetClass' => Project::className(), 'targetAttribute' => ['project_id' => 'id']],

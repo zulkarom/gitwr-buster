@@ -110,6 +110,7 @@ class ProjectController extends Controller
 					$colla->is_owner = 1;
 					$colla->created_at = new Expression('NOW()');
 					$colla->proj_start = time();
+					$colla->proj_end = time();
 					if($colla->save()){
 						$transaction->commit();
 					}
