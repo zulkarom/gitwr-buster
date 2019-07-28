@@ -291,4 +291,10 @@ class Project extends \yii\db\ActiveRecord
 		
 		return $hour . ':' .$minute . ':' . $second;
 	}
+	
+	public function getCollaborations()
+    {
+        return $this->hasMany(Collaboration::className(), ['user_id' => 'id']);
+    }
+
 }

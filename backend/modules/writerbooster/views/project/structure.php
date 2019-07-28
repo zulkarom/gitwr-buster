@@ -41,13 +41,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
 
 
- <?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>
- <?=$form->field($model, 'pomo_duration')->hiddenInput()->label(false)?>
- <?=$form->field($model, 'pomodoro')->hiddenInput()->label(false)?>
- 
 
-
-    <?php ActiveForm::end(); ?>
 
 </div></div>
 
@@ -98,6 +92,18 @@ if($model->structure){
 <div class="box">
 <div class="box-header"><div class="box-title"><h4>COLLABORATION</h4></div></div>
 <div class="box-body">
+
+ <?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>
+
+	<?php 
+	
+	print_r($model->collaborations);
+	
+	?>
+ 
+
+
+    <?php ActiveForm::end(); ?>
 
 <div><a href="#" class="btn btn-success">Add Collaboration</a></div>
 
