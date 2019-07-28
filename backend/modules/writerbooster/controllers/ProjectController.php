@@ -5,6 +5,7 @@ namespace backend\modules\writerbooster\controllers;
 use Yii;
 use backend\modules\writerbooster\models\Project;
 use backend\modules\writerbooster\models\ProjectSearch;
+use backend\modules\writerbooster\models\CollaSearch;
 use backend\modules\writerbooster\models\Collaboration;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -155,6 +156,16 @@ class ProjectController extends Controller
         return $this->render('structure', [
             'model' => $model,
 			'colla' => $colla
+        ]);
+		
+    }
+	
+	public function actionStructureColla($id)
+    {
+        $model = $this->findModel($id);
+		
+        return $this->render('structure-colla', [
+            'model' => $model
         ]);
 		
     }

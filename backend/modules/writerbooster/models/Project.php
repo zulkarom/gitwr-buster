@@ -3,6 +3,7 @@
 namespace backend\modules\writerbooster\models;
 
 use Yii;
+use common\models\User;
 
 /**
  * This is the model class for table "project".
@@ -296,5 +297,10 @@ class Project extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Collaboration::className(), ['project_id' => 'id']);
     }
+	
+	public function getUser(){
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
 
 }

@@ -9,7 +9,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@backend/views/myass
 
 <header class="main-header">
 
-    <?= Html::a('<span class="logo-lg">WRITER BOOSTER</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
+    <?= Html::a('<span class="logo-lg">iFALAH</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
 
     <nav class="navbar navbar-static-top" role="navigation">
 

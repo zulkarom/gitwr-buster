@@ -10,7 +10,7 @@ use backend\modules\writerbooster\models\Project;
 /**
  * ProjectSearch represents the model behind the search form of `backend\modules\writerbooster\models\Project`.
  */
-class ProjectSearch extends Project
+class CollaSearch extends Project
 {
     /**
      * @inheritdoc
@@ -41,9 +41,11 @@ class ProjectSearch extends Project
      */
     public function search($params)
     {
-        $query = Project::find()->where(['user_id' => Yii::$app->user->identity->id]);
-
-        // add conditions that should always apply here
+        $query = Project::find()
+		->innerJoin('project_colla', 'project.id = project_colla.project_id')
+		->where(['project_colla.user_id' => Yii::$app->user->identity->id])
+		
+		;
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

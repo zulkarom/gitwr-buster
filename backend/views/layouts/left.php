@@ -47,19 +47,13 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@backend/views/myass
                 'items' => [
                     ['label' => 'Main Menu', 'options' => ['class' => 'header']],
 					
-					[
-                        'label' => 'Writer Booster',
-                        'icon' => 'pencil',
-                        'url' => '#',
-                        'items' => [
-						
-							['label' => 'My Project', 'icon' => 'cubes', 'url' => ['/apps/project/index'],],
+					['label' => 'Dashboard', 'icon' => 'dashboard', 'url' => ['/site/index'],],
+					
+					['label' => 'My Project', 'icon' => 'cubes', 'url' => ['/apps/project/index'],],
 							
-							['label' => 'My Collaboration', 'icon' => 'users', 'url' => ['/apps/project/colla'],],
-	
+					['label' => 'My Collaboration', 'icon' => 'users', 'url' => ['/apps/project/colla'],],
+					
 
-                        ],
-                    ],
 
 					
 					[
