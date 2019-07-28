@@ -86,15 +86,19 @@ echo $form->field($colla, 'user_id')->widget(Select2::classname(), [
 		foreach($model->collaborations as $col){
 			echo '<tr><td>'.$i.'. </td>
 			<td>'.$col->user->fullname .'</td>
-			<td>'.
-			Html::a('<span class="glyphicon glyphicon-remove"></span>', ['/apps/project/delete-colla', 'id' => $col->id], [
+			<td>';
+			
+			if($model->user_id != $col->user_id){
+				echo Html::a('<span class="glyphicon glyphicon-remove"></span>', ['/apps/project/delete-colla', 'id' => $col->id], [
             'data' => [
                 'confirm' => 'Are you sure you want to remove this user?',
                 'method' => 'post',
             ],
-        ])
+        ]);
+			}
 			
-			.'</td>
+			
+			echo '</td>
 			</tr>';
 		$i++;
 		}

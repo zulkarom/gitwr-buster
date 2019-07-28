@@ -188,6 +188,8 @@ class ProjectController extends Controller
 		 if ($colla->load(Yii::$app->request->post())) {
 			$colla->project_id = $model->id;
 			$colla->created_at = new Expression('NOW()');
+			$colla->proj_start = time();
+			$colla->proj_end = time();
 			if($colla->save()){
 				Yii::$app->session->addFlash('success', "Data Updated");
 				return $this->redirect(['view-colla', 'id' => $model->id]);
@@ -321,20 +323,23 @@ class ProjectController extends Controller
 	public function actionUpdatePomo($id, $dur)
 	{
 		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+		
 		if (Yii::$app->request->isAjax) {
-			$model = $this->findModel($id);
-			$current = $model->pomodoro;
-			$model->pomodoro = $current + 1;
-			$duration = $model->project_duration;
-			$model->project_duration = date("Y-m-d h:i:s", strtotime($duration) + $dur);
 			
+			$model = Collaboration::findOne(['user_id' => Yii::$app->user->identity->id, 'project_id' => $id]);
+			
+			$current = $model->pomo_count;
+			$model->pomo_count = $current + 1;
+			$end = $model->proj_end;
+			$model->proj_end = $end + $dur;
+		
 			if($model->save()){
 				return [
 				'hasil' => 1,
 				];
 			}else{
 				return [
-				'hasil' => 0,
+				'hasil' => $model->getErrors(),
 				];
 			}
 			

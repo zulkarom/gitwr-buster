@@ -22,6 +22,7 @@ use common\models\User;
  */
 class Project extends \yii\db\ActiveRecord
 {
+	
     /**
      * @inheritdoc
      */
@@ -60,8 +61,8 @@ class Project extends \yii\db\ActiveRecord
             'status' => 'Status',
             'project_duration' => 'Project Duration',
             'pomodoro' => 'Pomodoro',
-            'pomo_duration' => 'Pomodoro Duration',
-            'pomo_long_break' => 'Long Break After #Pomodoro ',
+            'pomo_duration' => 'Duration Per Session',
+            'pomo_long_break' => 'Long Break After #Session ',
             'short_break' => 'Short Break',
             'long_break' => 'Long Break',
         ];
@@ -392,14 +393,60 @@ class Project extends \yii\db\ActiveRecord
 		return $array;
 	}
 	
+	public function countPomo(){
+		$result = Collaboration::find()
+		->select('SUM(pomo_count) as dur')
+		->where(['project_id' => $this->id])
+		->one()->dur;
+		
+		if($result){
+			return $result;
+		}else{
+			return 0;
+		}
+	}
+	
+	public function countPomoByUser($user_id){
+		$result = Collaboration::find()
+		->select('SUM(pomo_count) as dur')
+		->where(['project_id' => $this->id, 'user_id' => $user_id])
+		->one()->dur;
+		
+		if($result){
+			return $result;
+		}else{
+			return 0;
+		}
+	}
+	
 	public function getProjDuration(){
-		$start = strtotime($this->created_at);
-		$end = strtotime($this->project_duration);
-		$second = $end - $start;
+		$second = Collaboration::find()
+		->select('SUM(proj_end) - SUM(proj_start) as dur')
+		->where(['project_id' => $this->id])
+		->one()->dur;
+		
+		
+		
+		return $this->convertSecond($second);
+		
+	}
+	
+	public function projDurationByUser($user_id){
+		$second = Collaboration::find()
+		->select('SUM(proj_end) - SUM(proj_start) as dur')
+		->where(['project_id' => $this->id, 'user_id' => $user_id])
+		->one()->dur;
+		
 		$hour = 0;
 		$minute = 0;
 		
+		return $this->convertSecond($second);
 		
+	}
+	
+	private function convertSecond($second){
+		$hour = 0;
+		$minute = 0;
 		if ($second >= 60)
 		{
 		  $minute = (int)($second / 60);

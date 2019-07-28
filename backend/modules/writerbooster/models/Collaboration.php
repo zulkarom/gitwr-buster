@@ -18,6 +18,7 @@ use common\models\User;
  */
 class Collaboration extends \yii\db\ActiveRecord
 {
+	public $dur;
     /**
      * @inheritdoc
      */
@@ -32,7 +33,7 @@ class Collaboration extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['project_id', 'user_id', 'created_at', 'proj_start', 'proj_end'], 'required'],
+            [['project_id', 'user_id', 'created_at'], 'required'],
 			
             [['project_id', 'user_id', 'is_owner', 'proj_start', 'proj_end', 'pomo_count'], 'integer'],
 			

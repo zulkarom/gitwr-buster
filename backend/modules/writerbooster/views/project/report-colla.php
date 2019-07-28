@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = 'Update';
 <h3>Overall Report</h3>
 
 <div class="row">
-<div class="col-md-6"><h4>Total Session: <span id="parent-pomodoro"><?=$model->pomodoro?></span></h4>
+<div class="col-md-6"><h4>Total Session: <span id="parent-pomodoro"><?=$model->countPomo()?></span></h4>
 <h4>Total Writing Duration: <span id="pomo_duration"><?=$model->projDuration?></span></h4></div>
 
 <div class="col-md-6">
@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = 'Update';
 </div>
 
 <div class="row">
-<div class="col-md-6">
+<div class="col-md-12">
 
 <h3>Collaboration Report</h3>
 <div class="form-group"><?php 
@@ -60,7 +60,8 @@ $this->params['breadcrumbs'][] = 'Update';
 		echo '<table class="table table-stripped">
 		<thead>
 		<tr>
-			<th>No.</th><th>Name</th><th>Contents</th><th>Comments</th>
+			<th>No.</th><th>Name</th><th>Contents</th><th>Comments</th><th>Session</th>
+			<th>Duration</th>
 		</tr>
 		</thead>
 		
@@ -71,7 +72,8 @@ $this->params['breadcrumbs'][] = 'Update';
 			<td>'.$col->user->fullname .'</td>
 			<td>'.$model->countContentByUser($col->user_id).'</td>
 			<td>'.$model->countCommentByUser($col->user_id).'</td>
-			
+			<td>'.$model->countPomoByUser($col->user_id).'</td>
+			<td>'.$model->projDurationByUser($col->user_id).'</td>
 			</tr>';
 		$i++;
 		}
