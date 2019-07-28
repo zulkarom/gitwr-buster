@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
 <div class="form-group"><?= Html::a('Back', ['/apps/project/index'], ['class' => 'btn btn-info']) ?> 
 
-<a id="btn-start" href="JavaScript:newPopup('<?=Url::to(['/apps/project/counter', 'id' => $model->id])?>');" class="btn btn-warning" >START POMODORO TIMER</a></div>
+<a id="btn-start" href="JavaScript:newPopup('<?=Url::to(['/apps/project/counter', 'id' => $model->id])?>');" class="btn btn-warning" >START SESSION TIMER</a></div>
 
 
 <div class="box">
@@ -27,8 +27,8 @@ $this->params['breadcrumbs'][] = 'Update';
 
 
 <div class="row">
-<div class="col-md-6"><h3>Total Pomodoro: <span id="parent-pomodoro"><?=$model->pomodoro?></span></h3>
-<h3>Total Writing Duration: <span id="pomo_duration"><?=$model->pomo_duration?></span></h3></div>
+<div class="col-md-6"><h3>Total Session: <span id="parent-pomodoro"><?=$model->pomodoro?></span></h3>
+<h3>Total Writing Duration: <span id="pomo_duration"><?=$model->projDuration?></span></h3></div>
 
 <div class="col-md-6">
 <h3>Total Heading: <span><?=$model->countHead()?></span></h3>
@@ -126,7 +126,7 @@ function newPopup(url) {
 	popupWindow = window.open(url,'popUpWindow','height=600,width=400,left=10,top=10,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes')
 }
 
-function setPomodoro(){
+/* function setPomodoro(){
 	var curr_pomo = parseInt($("#parent-pomodoro").text());
 	curr_pomo++;
 	$("#parent-pomodoro").text(curr_pomo);
@@ -140,7 +140,7 @@ function setPomodoro(){
 	$("#project-pomo_duration").val(new_duration);
 	
 	
-}
+} */
 </script>
 <?php JSRegister::end(); ?>
 

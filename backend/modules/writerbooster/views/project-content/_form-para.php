@@ -59,6 +59,17 @@ use dosamigos\tinymce\TinyMce;
 	<?= Html::submitButton('<span class="glyphicon glyphicon-floppy-disk"></span>  Save Paragraph', ['class' => 'btn btn-success']) ?>
 </div></div>
 
+<div class="col-md-6" align="right"><div class="form-group">
+	<?= Html::a('Delete', ['delete', 'project_id' => $project->id, 'id' => $model->id], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => 'Are you sure you want to delete this paragraph?',
+                'method' => 'post',
+            ],
+        ]) ?>
+
+</div></div>
+
 
 
 </div>

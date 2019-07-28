@@ -104,6 +104,7 @@ class ProjectController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			Yii::$app->session->addFlash('success', "Data Updated");
             return $this->redirect(['update', 'id' => $model->id]);
         }
 
@@ -189,4 +190,29 @@ class ProjectController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+	
+	public function actionUpdatePomo($id, $dur)
+	{
+		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+		if (Yii::$app->request->isAjax) {
+			$model = $this->findModel($id);
+			$current = $model->pomodoro;
+			$model->pomodoro = $current + 1;
+			$duration = $model->project_duration;
+			$model->project_duration = date("Y-m-d h:i:s", strtotime($duration) + $dur);
+			
+			if($model->save()){
+				return [
+				'hasil' => 1,
+				];
+			}else{
+				return [
+				'hasil' => 0,
+				];
+			}
+			
+			
+		} 
+		
+	}
 }

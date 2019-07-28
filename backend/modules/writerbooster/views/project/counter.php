@@ -8,7 +8,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@backend/views/myass
 /* @var $this yii\web\View */
 /* @var $model backend\modules\writerbooster\models\Project */
 
-$this->title = 'WRITER BOOSTER TIMER';
+$this->title = 'WRITERBOOSTER TIMER';
 ?>
 <style type="text/css">
 #counter{ width: 240px; height: 45px; }
@@ -32,11 +32,14 @@ body {font-family: verdana}
 </audio>
 <div align="center">
 
-<h2 id="con-header">ENJOY MY WRITING TIME</h3>
+<h2 id="con-header">WRITING TIME</h3>
+
+<input type="hidden" id="project_id" value="0" />
 
 <div id="counter"></div>
 <p>
-<button id="pauseButton">Pause</button>
+<button id="initiate">Start Session</button>
+<button id="pauseButton" style="display:none">Pause</button>
 <button id="resumeWrite" style="display:none">Resume Writing</button>
 </p>
 
@@ -45,22 +48,57 @@ body {font-family: verdana}
 <img id="img-golf" style="display:none" src="<?=$directoryAsset?>/img/golf.jpg" width="100" />
 <img id="img-congrats" style="display:none" src="<?=$directoryAsset?>/img/congrats.jpg" width="200" />
 <img id="img-alarm" style="display:none" src="<?=$directoryAsset?>/img/alarm.jpg" width="150" />
+<p>Finished Session: <span id="finished-pomo">0</span></p>
+<hr />
+<style>
+.rcorners {
+  border-radius: 5px;
+  padding: 2px; 
+  width: 40px;
+  height: 20px; 
+  text-align:center
+}
 
-<h3>Targeted of Pomodoro: <span id="target-pomo">4</span></h3>
-<h3>Finished Pomodoro: <span id="finished-pomo">0</span></h3>
-<p>Pomodoro Duration: <span id="pomo-duration">10</span> Seconds</p>
-<p>Short Break: <span id="pomo-duration">5</span> Seconds</p>
-<p>Long Break after <span id="pomo-duration">3</span> Pomodoro</p>
-<p>Long Break Duration: <span id="pomo-duration">7</span> Seconds</p>
-<input id="input-long-break" type="hidden" value="3" />
+.rcorners-time {
+  border-radius: 5px;
+  padding: 2px; 
+  width: 70px;
+  height: 20px; 
+  text-align:center
+}
+
+</style>
+<p>Targeted Session: <input type="number" class="rcorners" id="target-pomo" value="<?=$model->default_session?>" /></p>
+
+<p>Session Duration: <input type="text" id="session-duration" class="rcorners-time" value="<?=$model->pomo_duration?>" /></p>
+<p>Short Break: <input type="text" id="short-break" class="rcorners-time" value="<?=$model->short_break?>" /></p>
+<p>Long Break after <input type="number" id="input-long-break" class="rcorners" value="3" /> Session</p>
+<p>Long Break Duration: <input type="text" id="long-break" class="rcorners-time" value="<?=$model->long_break?>" /> </p>
+
 <input id="pomo-after-rest-long" type="hidden" value="0" />
 
 </div>
 
 
 
+
 <?php JSRegister::begin(); ?>
 <script>
+
+$('#initiate').click(function(){
+	$("input.rcorners").prop('disabled', true);
+	$(this).hide();
+	$('#pauseButton').show();
+	write();
+	
+	$('#pauseButton').click(function() { 
+		var pause = $(this).text() === 'Pause'; 
+		$(this).text(pause ? 'Resume' : 'Pause'); 
+		$('#counter').countdown(pause ? 'pause' : 'resume'); 
+	}); 
+
+});
+
 var long_break = parseInt($("#input-long-break").val());
 var au_start = document.getElementById("audio-start"); 
 var au_stop = document.getElementById("audio-rest"); 
@@ -80,13 +118,14 @@ function stopAlarm() {
   au_alarm.pause(); 
 	au_alarm.currentTime = 0;
 } 
+ 
 function playApplause() { 
   au_applause.play(); 
 } 
 
 
-$(function () {
-	write();
+/* $(function () {
+	//write();
 	
 	$('#pauseButton').click(function() { 
 		var pause = $(this).text() === 'Pause'; 
@@ -94,15 +133,24 @@ $(function () {
 		$('#counter').countdown(pause ? 'pause' : 'resume'); 
 	}); 
 
-});
+}); */
 
 function write(){
 	playStart();
-	$("#con-header").text('ENJOY MY WRITING TIME');
+	$("#con-header").text('WRITING TIME');
 	shortly = new Date(); 
-	shortly.setSeconds(shortly.getSeconds() + 10.5); 
+	var wr_duration = str_to_sec($('#session-duration').val()) + 0.5;
+	shortly.setSeconds(shortly.getSeconds() + wr_duration); 
     //shortly.setMinutes(shortly.getMinutes() + 5.5); 
 	$('#counter').countdown({until: shortly, onExpiry: rest});
+}
+
+function str_to_sec(str){
+	var arr = str.split(':');
+	var hour = parseInt(arr[0]);
+	var minute = parseInt(arr[1]);
+	var second = parseInt(arr[2]);
+	return (hour * 60 * 60) + (minute * 60) + second;
 }
 
 function startButton(){
@@ -125,9 +173,10 @@ function rewrite(){
 	$('#pauseButton').show();
 	$("#resumeWrite").hide();
 	$('#counter').countdown('destroy'); 
-	$("#con-header").text('ENJOY MY WRITING TIME');
+	$("#con-header").text('WRITING TIME');
 	shortly = new Date(); 
-	shortly.setSeconds(shortly.getSeconds() + 10.5); 
+	var wr_duration = str_to_sec($('#session-duration').val()) + 0.5;
+	shortly.setSeconds(shortly.getSeconds() + wr_duration); 
     
 	
 	
@@ -140,8 +189,21 @@ function counterAfterRestLong(){
 	$('#pomo-after-rest-long').val(after_rest_long);
 }
 
+function connect_db(){
+	var project = <?=$model->id?>;
+	var wr_duration = str_to_sec($('#session-duration').val());
+	var url = '<?php echo Yii::$app->request->baseUrl. '/apps/project/update-pomo?id='?>' + project + '<?php echo '&dur=' ?>' + wr_duration;
+	  $.ajax({
+		   url:  url,
+		   type: 'get',
+		   success: function (data) {
+			  console.log(data.hasil);
+		   }
+	  });
+}
+
 function rest() { 
-	opener.setPomodoro();
+	connect_db();
 	counterAfterRestLong();
 	if(checkPomodoro()){
 		playStop();
@@ -168,7 +230,8 @@ function short_rest(){
 		$('#counter').countdown('destroy'); 
 		
 		shortly = new Date(); 
-		shortly.setSeconds(shortly.getSeconds() + 5.5); 
+		var wr_rest_short = str_to_sec($('#short-break').val()) + 0.5;
+		shortly.setSeconds(shortly.getSeconds() + wr_rest_short); 
 		
 		$('#counter').countdown({until: shortly, onExpiry: startButton});
 }
@@ -181,7 +244,8 @@ function long_rest(){
 		$('#counter').countdown('destroy'); 
 		$('#pomo-after-rest-long').val(0);
 		shortly = new Date(); 
-		shortly.setSeconds(shortly.getSeconds() + 7.5); 
+		var wr_rest_long = str_to_sec($('#long-break').val()) + 0.5;
+		shortly.setSeconds(shortly.getSeconds() + wr_rest_long); 
 		//shortly.setMinutes(shortly.getMinutes() + 5.5); 
 		
 		$('#counter').countdown({until: shortly, onExpiry: startButton});
@@ -190,10 +254,11 @@ function long_rest(){
 
 
 function checkPomodoro(){
-	var total = parseInt($("#target-pomo").text());
+	var total = parseInt($("#target-pomo").val());
 	var finished = parseInt($("#finished-pomo").text());
 	finished++;
 	$("#finished-pomo").text(finished);
+	//alert(finished + '==' + total);
 	if(finished == total){
 		playApplause();
 		$("#con-header").text('FINISHED');
@@ -201,10 +266,12 @@ function checkPomodoro(){
 		$('#counter').hide();
 		$("#img-write").hide();
 		$("#img-congrats").show();
+		$("input.rcorners").prop('disabled', false);
 		return false
 	}
 	return true;
 }
+
 
 </script>
 <?php JSRegister::end(); ?>

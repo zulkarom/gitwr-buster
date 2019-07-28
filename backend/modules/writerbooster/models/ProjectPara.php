@@ -32,8 +32,7 @@ class ProjectPara extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['content_id'], 'required'],
-			
+            [['content_id', 'para_desc', 'para_text', 'created_at', 'updated_at'], 'required'],
             [['content_id'], 'integer'],
             [['para_desc', 'para_text'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
@@ -49,8 +48,8 @@ class ProjectPara extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'content_id' => 'Content ID',
-            'para_desc' => 'Paragaph Note',
-            'para_text' => 'Paragaph Text',
+            'para_desc' => 'Para Desc',
+            'para_text' => 'Para Text',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];

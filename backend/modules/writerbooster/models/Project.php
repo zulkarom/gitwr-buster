@@ -39,7 +39,7 @@ class Project extends \yii\db\ActiveRecord
 			
 			[['content'], 'required', 'on' => 'content'],
 			
-            [['user_id', 'status', 'pomodoro', 'pomo_long_break'], 'integer'],
+            [['user_id', 'status', 'pomodoro', 'pomo_long_break', 'default_session'], 'integer'],
             [['description'], 'string'],
             [['project_duration', 'pomo_duration', 'short_break', 'long_break'], 'safe'],
             [['title'], 'string', 'max' => 200],
@@ -189,7 +189,7 @@ class Project extends \yii\db\ActiveRecord
 	
 	public function countHead(){
 		$result = ProjectContent::find()
-		->where(['project_id' => $this->id, 'ct_type' => 1])
+		->where(['project_id' => $this->id, 'ct_type' => 1, 'ct_active' => 1])
 		->count();
 		
 		if($result){
@@ -201,7 +201,7 @@ class Project extends \yii\db\ActiveRecord
 	
 	public function countPara(){
 		$result = ProjectContent::find()
-		->where(['project_id' => $this->id, 'ct_type' => 2])
+		->where(['project_id' => $this->id, 'ct_type' => 2, 'ct_active' => 1])
 		->count();
 		
 		if($result){
@@ -262,5 +262,33 @@ class Project extends \yii\db\ActiveRecord
 		
 		}
 		return $array;
+	}
+	
+	public function getProjDuration(){
+		$start = strtotime($this->created_at);
+		$end = strtotime($this->project_duration);
+		$second = $end - $start;
+		$hour = 0;
+		$minute = 0;
+		
+		
+		if ($second >= 60)
+		{
+		  $minute = (int)($second / 60);
+		  $second = fmod($second,60);
+		}
+		
+		if ($minute >= 60)
+		{
+		  $hour = (int)($minute / 60);
+		  $minute = fmod($minute,60);
+		  
+		}
+		
+		$second = strlen($second) == 2 ? $second : '0' . $second;
+		$minute = strlen($minute) == 2 ? $minute : '0' . $minute;
+		$hour = strlen($hour) >= 2 ? $hour : '0' . $hour;
+		
+		return $hour . ':' .$minute . ':' . $second;
 	}
 }

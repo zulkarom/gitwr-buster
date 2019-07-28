@@ -16,7 +16,16 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 	
-	<?= $form->field($model, 'status')->dropDownList( [1 => 'YES' , 0 => 'NO'] ) ?>
+	<div class="row">
+<div class="col-md-6"><?= $form->field($model, 'status')->dropDownList( [1 => 'YES' , 0 => 'NO'] ) ?></div>
+
+<div class="col-md-6">
+<?= $form->field($model, 'default_session')->textInput() ?>
+</div>
+
+</div>
+	
+	
 	
 	<div class="row">
 <div class="col-md-6"><?= $form->field($model, 'pomo_duration')->textInput() ?></div>
