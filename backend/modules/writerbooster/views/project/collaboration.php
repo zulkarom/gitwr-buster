@@ -33,16 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			]
             ,
             //'description:ntext',
-			[
-				'attribute' =>  'pomodoro',
-				'contentOptions' => [ 'style' => 'width: 10%;' ],
-			]
-			,
-			[
-				'attribute' =>  'pomo_duration',
-				'contentOptions' => [ 'style' => 'width: 10%;' ],
-			]
-			,
+			
 			[
 				'attribute' => 'status',
 				'format' => 'html',

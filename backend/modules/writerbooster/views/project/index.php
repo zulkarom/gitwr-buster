@@ -30,20 +30,12 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
 			[
 				'attribute' => 'title',
-				'contentOptions' => [ 'style' => 'width: 45%;' ],
+				'contentOptions' => [ 'style' => 'width: 65%;' ],
 			]
             ,
             //'description:ntext',
-			[
-				'attribute' =>  'pomodoro',
-				'contentOptions' => [ 'style' => 'width: 10%;' ],
-			]
-			,
-			[
-				'attribute' =>  'pomo_duration',
-				'contentOptions' => [ 'style' => 'width: 10%;' ],
-			]
-			,
+			
+			
 			[
 				'attribute' => 'status',
 				'contentOptions' => [ 'style' => 'width: 10%;' ],
