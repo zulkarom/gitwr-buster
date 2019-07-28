@@ -15,7 +15,8 @@ $this->params['breadcrumbs'][] = 'Update';
  <?= $this->render('_form-para-colla', [
         'model' => $model,
 		'project' => $project,
-		'para' => $para
+		'para' => $para,
+		'comment' => $comment
     ]) ?>
 
 

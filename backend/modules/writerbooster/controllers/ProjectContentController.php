@@ -6,6 +6,7 @@ use Yii;
 use backend\modules\writerbooster\models\ProjectContent;
 use backend\modules\writerbooster\models\ProjectPara;
 use backend\modules\writerbooster\models\Project;
+use backend\modules\writerbooster\models\ParaComment;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -223,6 +224,7 @@ class ProjectContentController extends Controller
         $model = $this->findModel($id);
 		$para = $model->para;
 		$project = $this->findProject($project_id);
+		$comment = new ParaComment;
 
         if ($model->load(Yii::$app->request->post()) && $para->load(Yii::$app->request->post())) {
 			$transaction = Yii::$app->db->beginTransaction();
@@ -249,11 +251,19 @@ class ProjectContentController extends Controller
 			
            
         }
+		
+		if($comment->load(Yii::$app->request->post())){
+			$comment->para_id = $para->id;
+			$comment->user_id = Yii::$app->user->identity->id;
+			$comment->created_at = new Expression('NOW()');
+			$comment->save();
+		}
 
         return $this->render('update-para-colla', [
             'model' => $model,
 			'project' => $project,
-			'para' => $para
+			'para' => $para,
+			'comment' => $comment
         ]);
     }
 

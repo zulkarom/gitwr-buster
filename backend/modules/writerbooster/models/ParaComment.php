@@ -3,7 +3,7 @@
 namespace backend\modules\writerbooster\models;
 
 use Yii;
-use commmon\models\User;
+use common\models\User;
 
 /**
  * This is the model class for table "para_comment".
@@ -73,4 +73,27 @@ class ParaComment extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+	
+	public function getCommentTime()
+	{
+
+		$time = time() - strtotime($this->created_at); // to get the time since that moment
+		$time = ($time<1)? 1 : $time;
+		$tokens = array (
+			31536000 => 'year',
+			//2592000 => 'month',
+			//604800 => 'week',
+			86400 => 'day',
+			3600 => 'hour',
+			60 => 'minute',
+			1 => 'second'
+		);
+
+		foreach ($tokens as $unit => $text) {
+			if ($time < $unit) continue;
+			$numberOfUnits = floor($time / $unit);
+			return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'') . ' ago';
+		}
+
+	}
 }

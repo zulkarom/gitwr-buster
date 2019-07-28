@@ -32,7 +32,8 @@ class ProjectPara extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['content_id', 'para_desc', 'para_text', 'created_at', 'updated_at'], 'required'],
+            [['content_id', 'para_text', 'created_at', 'updated_at'], 'required'],
+			
             [['content_id'], 'integer'],
             [['para_desc', 'para_text'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
@@ -61,5 +62,10 @@ class ProjectPara extends \yii\db\ActiveRecord
     public function getContent()
     {
         return $this->hasOne(ProjectContent::className(), ['id' => 'content_id']);
+    }
+	
+	public function getComments()
+    {
+        return $this->hasMany(ParaComment::className(), ['para_id' => 'id'])->orderBy('created_at ASC');
     }
 }
