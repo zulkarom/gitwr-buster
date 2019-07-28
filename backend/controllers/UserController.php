@@ -12,26 +12,33 @@ use yii\filters\VerbFilter;
 use yii\db\Expression;
 use yii\web\UploadedFile;
 use backend\models\UserSearch;
+use yii\filters\AccessControl;
+use yii\db\Query;
 
 /**
  * UsersController implements the CRUD actions for Users model.
  */
 class UserController extends Controller
 {
+	
     /**
      * @inheritdoc
      */
-    public function behaviors()
+	public function behaviors()
     {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
         ];
     }
+
 
     /**
      * Lists all Users models.
@@ -208,4 +215,26 @@ class UserController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+	public function actionUserListJson($q = null, $id = null) {
+        
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        
+        $out = ['results' => ['id' => '', 'text' => '']];
+        if (!is_null($q)) {
+            $query = new Query;
+            $query->select('id, fullname AS text')
+                ->from('user')
+                ->where(['like', 'fullname', $q])
+                ->limit(20);
+            $command = $query->createCommand();
+            $data = $command->queryAll();
+            $out['results'] = array_values($data);
+        }
+        elseif ($id > 0) {
+            $out['results'] = ['id' => $id, 'text' => User::find($id)->fullname];
+        }
+        return $out;
+    }
+
 }

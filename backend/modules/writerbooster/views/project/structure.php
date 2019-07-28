@@ -5,6 +5,10 @@ use yii\helpers\Url;
 use richardfan\widget\JSRegister;
 use dosamigos\tinymce\TinyMce;
 use kartik\widgets\ActiveForm;
+use kartik\select2\Select2;
+use yii\web\JsExpression;
+use common\models\User;
+
 
 
 /* @var $this yii\web\View */
@@ -90,22 +94,63 @@ if($model->structure){
 
 <div class="col-md-4">
 <div class="box">
-<div class="box-header"><div class="box-title"><h4>COLLABORATION</h4></div></div>
+
+<div class="box-header">
+
+<div class="box-title"><h4>COLLABORATION</h4></div></div>
+
 <div class="box-body">
 
- <?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>
+<?php $form = ActiveForm::begin(); ?>
 
-	<?php 
-	
-	print_r($model->collaborations);
-	
-	?>
- 
+<?php
+
+$url = Url::to(['/user/user-list-json']);
+echo $form->field($colla, 'user_id')->widget(Select2::classname(), [
+    'initValueText' =>'', // set the initial display text
+    'options' => ['placeholder' => 'Search...'],
+'pluginOptions' => [
+    'allowClear' => true,
+    'minimumInputLength' => 3,
+    'language' => [
+        'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
+    ],
+    'ajax' => [
+        'url' => $url,
+        'dataType' => 'json',
+        'data' => new JsExpression('function(params) { return {q:params.term}; }')
+    ],
+    'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+    'templateResult' => new JsExpression('function(user) { return user.text; }'),
+    'templateSelection' => new JsExpression('function (user) { return user.text; }'),
+],
+])->label(false);
+
+ ?>
+
 
 
     <?php ActiveForm::end(); ?>
 
-<div><a href="#" class="btn btn-success">Add Collaboration</a></div>
+<div><a href="#" class="btn btn-success"><span class='glyphicon glyphicon-plus'></span> Add Collaboration</a></div>
+
+<br />
+<div class="form-group"><?php 
+	
+	if($model->collaborations){
+		echo '<table class="table table-stripped">';
+		$i = 1;
+		foreach($model->collaborations as $col){
+			echo '<tr><td>'.$i.'. </td>
+			<td>'.$col->user->fullname .'</td>
+			<td><span class="glyphicon glyphicon-remove"></span> </td>
+			</tr>';
+		$i++;
+		}
+		echo '</table>';
+	}
+	
+	?></div>
 
 
 

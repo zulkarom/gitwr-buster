@@ -294,7 +294,7 @@ class Project extends \yii\db\ActiveRecord
 	
 	public function getCollaborations()
     {
-        return $this->hasMany(Collaboration::className(), ['user_id' => 'id']);
+        return $this->hasMany(Collaboration::className(), ['project_id' => 'id']);
     }
 
 }

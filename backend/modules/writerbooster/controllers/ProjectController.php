@@ -5,6 +5,7 @@ namespace backend\modules\writerbooster\controllers;
 use Yii;
 use backend\modules\writerbooster\models\Project;
 use backend\modules\writerbooster\models\ProjectSearch;
+use backend\modules\writerbooster\models\Collaboration;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -129,6 +130,7 @@ class ProjectController extends Controller
     {
         $model = $this->findModel($id);
 		$model->scenario = 'content';
+		$colla = new Collaboration;
 		
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			Yii::$app->session->addFlash('success', "Data Updated");
@@ -137,6 +139,7 @@ class ProjectController extends Controller
 		
         return $this->render('structure', [
             'model' => $model,
+			'colla' => $colla
         ]);
 		
     }
