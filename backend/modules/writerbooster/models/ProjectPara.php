@@ -50,7 +50,7 @@ class ProjectPara extends \yii\db\ActiveRecord
             'id' => 'ID',
             'content_id' => 'Content ID',
             'para_desc' => 'Para Desc',
-            'para_text' => 'Para Text',
+            'para_text' => 'Paragraph Text',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];

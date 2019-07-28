@@ -64,6 +64,8 @@ class ProjectController extends Controller
         ]);
     }
 	
+	
+	
 	public function actionListView()
     {
         $searchModel = new ProjectSearch();
@@ -139,6 +141,22 @@ class ProjectController extends Controller
 		
     }
 	
+	public function actionReport($id){
+		$model = $this->findModel($id);
+		return $this->render('report', [
+			'model' => $model,
+        ]);
+	}
+	
+	public function actionViewColla($id){
+		$model = $this->findModel($id);
+		$colla = new Collaboration;
+		return $this->render('view_colla', [
+			'model' => $model,
+			'colla' => $colla
+        ]);
+	}
+	
 	public function actionStructure($id)
     {
         $model = $this->findModel($id);
@@ -156,6 +174,16 @@ class ProjectController extends Controller
         return $this->render('structure', [
             'model' => $model,
 			'colla' => $colla
+        ]);
+		
+    }
+	
+	public function actionFulltext($id)
+    {
+        $model = $this->findModel($id);
+		
+        return $this->render('fulltext', [
+            'model' => $model,
         ]);
 		
     }

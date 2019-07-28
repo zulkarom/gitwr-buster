@@ -150,15 +150,41 @@ $("#send-comment").click(function(){
 		   $("#con_comments").html(data.hasil);
 		   $("#comment_text").val('');
 		   $("#comment_text").prop('disabled', false);
+		   loadComment();
           //console.log(data);
        }
   });
 });
 
-$(".close").click(function(){
-	var id = $(this).attr('id');
-	alert(id);
-});
+loadComment();
+
+function loadComment(){
+	$(".close").click(function(){
+		var str = $(this).attr('id');
+		var arr = str.split('-');
+		id = arr[1];
+		deleteComment(id);
+	});
+}
+
+function deleteComment(id){
+	$.ajax({
+       url: '<?php echo Yii::$app->request->baseUrl. '/apps/project-content/delete-comment' ?>',
+       type: 'post',
+       data: {
+				 comment: id ,
+				 para: <?=$para->id?>,
+                 _csrf : '<?=Yii::$app->request->getCsrfToken()?>'
+             },
+       success: function (data) {
+		   $("#con_comments").html(data.hasil);
+		   $("#comment_text").val('');
+		   $("#comment_text").prop('disabled', false);
+		   loadComment();
+          //console.log(data);
+       }
+  });
+}
 </script>
 <?php JSRegister::end(); ?>
 

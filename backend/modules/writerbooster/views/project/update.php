@@ -7,12 +7,18 @@ use yii\helpers\Html;
 
 $this->title = 'Update Project';
 $this->params['breadcrumbs'][] = ['label' => 'Projects', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="box">
-<div class="box-header"></div>
-<div class="box-body"><div class="project-update">
+<div class="box-body">
+
+<?=$this->render('_tab', [
+       'model' => $model,
+    ]);
+?>
+<br />
+
+<div class="project-update">
 
     <?= $this->render('_form', [
         'model' => $model,

@@ -344,5 +344,28 @@ class ProjectContentController extends Controller
 		 
 	}
 	
+	public function actionDeleteComment(){
+		 \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+		  $data = Yii::$app->request->post();
+		  $id = $data['comment'];
+		  $para = $data['para'];
+		  $com = ParaComment::findOne($id);
+		  if($com->delete()){
+			  $para = $this->findPara($para);
+			  $comments = $para->comments;
+			  return [
+				'hasil' => $para->commentsHtml,
+			];
+		  }else{
+			  return [
+				'hasil' => $com->getErrors(),
+			];
+		  }
+		  
+		  
+		  
+		 
+	}
+	
 	
 }

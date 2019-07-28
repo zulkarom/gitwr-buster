@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = 'Update';
 <div class="row">
 <div class="col-md-8">
 <br />
-<div class="form-group"><a id="btn-start" href="JavaScript:newPopup('<?=Url::to(['/apps/project/counter', 'id' => $model->id])?>');" class="btn btn-warning" >START SESSION TIMER</a> <a href="<?=Url::to(['/apps/project-content/create', 'project_id' => $model->id, 'type' => 1])?>" class="btn btn-success">Add Heading</a> <a href="<?=Url::to(['/apps/project-content/create-para', 'project_id' => $model->id])?>" class="btn btn-success">Add Paragraph</a></div>
+
 
 
 <h2>Title: <?=$model->title?></h2>
