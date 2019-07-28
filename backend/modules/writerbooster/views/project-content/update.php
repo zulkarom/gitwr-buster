@@ -9,7 +9,7 @@ $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' 
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="project-content-update">
-
+<div class="form-group"><?=Html::a('Back to Structure', ['project/structure', 'id' => $project->id], ['class' => 'btn btn-default btn-sm'])?></div>
  <?= $this->render('_form', [
         'model' => $model,
 		'project' => $project,

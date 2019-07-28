@@ -163,6 +163,22 @@ class ProjectContentController extends Controller
         ]);
     }
 	
+	public function actionUpdateColla($id, $project_id)
+    {
+        $model = $this->findModel($id);
+		$project = $this->findProject($project_id);
+
+        if ($model->load(Yii::$app->request->post())) {
+			$model->save();
+            return $this->redirect(['/apps/project/structure-colla/', 'id' => $project_id]);
+        }
+
+        return $this->render('update-colla', [
+            'model' => $model,
+			'project' => $project,
+        ]);
+    }
+	
 	public function actionUpdatePara($id, $project_id)
     {
         $model = $this->findModel($id);
@@ -196,6 +212,45 @@ class ProjectContentController extends Controller
         }
 
         return $this->render('update-para', [
+            'model' => $model,
+			'project' => $project,
+			'para' => $para
+        ]);
+    }
+	
+	public function actionUpdateParaColla($id, $project_id)
+    {
+        $model = $this->findModel($id);
+		$para = $model->para;
+		$project = $this->findProject($project_id);
+
+        if ($model->load(Yii::$app->request->post()) && $para->load(Yii::$app->request->post())) {
+			$transaction = Yii::$app->db->beginTransaction();
+			try {
+				$model->updated_at = new Expression('NOW()');
+				if($model->save()){
+					$para->updated_at = new Expression('NOW()');
+					$para->save();
+					Yii::$app->session->addFlash('success', "Data Updated");
+					 
+				}else{
+					$model->flashError();
+				}
+				
+				$transaction->commit();
+				return $this->redirect(['/apps/project-content/update-para-colla/', 'id' => $model->id, 'project_id' => $project_id]);
+			}
+			catch (Exception $e) 
+			{
+				$transaction->rollBack();
+				Yii::$app->session->addFlash('error', $e->getMessage());
+			}
+
+			
+           
+        }
+
+        return $this->render('update-para-colla', [
             'model' => $model,
 			'project' => $project,
 			'para' => $para

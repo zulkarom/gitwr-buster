@@ -43,11 +43,16 @@ use yii\widgets\ActiveForm;
 
 </div>
 	
-	
-
-    <div class="form-group">
+	<div class="row">
+<div class="col-md-6"><div class="form-group">
         <?= Html::submitButton('Save Project Setting', ['class' => 'btn btn-success']) ?>
-    </div>
+    </div></div>
+
+
+
+</div>
+
+    
 
     <?php ActiveForm::end(); ?>
 

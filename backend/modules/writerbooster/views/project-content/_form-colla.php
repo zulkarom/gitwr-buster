@@ -24,27 +24,11 @@ use yii\widgets\ActiveForm;
 
 </div>
 
-<div class="row">
-<div class="col-md-6"><div class="form-group">
+
+
+<div class="form-group">
 	<?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-</div></div>
-
-<div class="col-md-6" align="right"><div class="form-group">
-	<?= Html::a('Delete', ['delete', 'project_id' => $project->id, 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this paragraph?',
-                'method' => 'post',
-            ],
-        ]) ?>
-
-</div></div>
-
 </div>
-
-
-
-
 
 <?php ActiveForm::end(); ?>
 
