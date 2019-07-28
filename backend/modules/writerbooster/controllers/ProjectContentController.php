@@ -308,5 +308,41 @@ class ProjectContentController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 	
+	protected function findPara($id)
+    {
+        if (($model = ProjectPara::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+	
+	public function actionComment(){
+		 \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+		  $data = Yii::$app->request->post();
+		  $text = $data['comment_text'];
+		  $id = $data['para'];
+		  $com = new ParaComment;
+		  $com->para_id = $id;
+		  $com->created_at = time();
+		  $com->comment_text = $text;
+		  $com->user_id = Yii::$app->user->identity->id;
+		  if($com->save()){
+			  $para = $this->findPara($id);
+			  $comments = $para->comments;
+			  return [
+				'hasil' => $para->commentsHtml,
+			];
+		  }else{
+			  return [
+				'hasil' => $com->getErrors(),
+			];
+		  }
+		  
+		  
+		  
+		 
+	}
+	
 	
 }

@@ -2,6 +2,9 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use dosamigos\tinymce\TinyMce;
+use richardfan\widget\JSRegister;
+
+
 /* @var $this yii\web\View */
 /* @var $model backend\modules\writerbooster\models\ProjectContent */
 
@@ -66,33 +69,31 @@ a.close {
     filter: alpha(opacity=20);
     opacity: .2;
 }
+.block-comment{
+	background-color:#fffee6;
+	padding:10px;
+	border-radius: 10px;
+	-webkit-box-shadow: 3px 3px 2px -2px rgba(0,0,0,0.75);
+-moz-box-shadow: 3px 3px 2px -2px rgba(0,0,0,0.75);
+box-shadow: 3px 3px 2px -2px rgba(0,0,0,0.75);
+}
+.block-comment-my{
+	background-color:#cafbc4;
+	padding:10px;
+	border-radius: 10px;
+	-webkit-box-shadow: 3px 3px 2px -2px rgba(0,0,0,0.75);
+-moz-box-shadow: 3px 3px 2px -2px rgba(0,0,0,0.75);
+box-shadow: 3px 3px 2px -2px rgba(0,0,0,0.75);
+}
 </style>
 
 
-<?php 
-
-if($para->comments){
-	echo '<table class="table table-stripped">';
-	foreach($para->comments as $com){
-		echo '<tr><td>
-		<i style="font-size:12px"><strong>'.$com->user->fullname .'</strong> - '.$com->commentTime .'</i>
-		
-		
-		<div style="background-color:#cafbc4;padding:10px;border-radius: 10px;">'.$com->comment_text .'<a href="#" class="close">&times;</a></div></td></tr>';
-	}
-	echo '</table>';
-	
-}else{
-	echo 'No comment so far';
-}
-
-
-?>
+<div id="con_comments"><?=$para->commentsHtml;?></div>
 
 <div class="input-group">
-    <input type="text" class="form-control" style="height:50px;border-radius: 5px 0px 0px 5px;" placeholder="Write a comment to the paragraph.">
+    <input type="text" id="comment_text" class="form-control" style="height:50px;border-radius: 5px 0px 0px 5px;" placeholder="Write a comment to the paragraph.">
     <div class="input-group-btn">
-      <button class="btn btn-info" type="submit" style="height:50px">
+      <button type="button" class="btn btn-info" id="send-comment" type="submit" style="height:50px">
         Comment
       </button>
     </div>
@@ -129,3 +130,35 @@ if($para->comments){
 </div>
 </div>
 </div>
+
+
+
+
+<?php JSRegister::begin(); ?>
+<script>
+$("#send-comment").click(function(){
+	$("#comment_text").prop('disabled', true);
+	$.ajax({
+       url: '<?php echo Yii::$app->request->baseUrl. '/apps/project-content/comment' ?>',
+       type: 'post',
+       data: {
+                 comment_text: $("#comment_text").val() , 
+				 para: <?=$para->id?> ,
+                 _csrf : '<?=Yii::$app->request->getCsrfToken()?>'
+             },
+       success: function (data) {
+		   $("#con_comments").html(data.hasil);
+		   $("#comment_text").val('');
+		   $("#comment_text").prop('disabled', false);
+          //console.log(data);
+       }
+  });
+});
+
+$(".close").click(function(){
+	var id = $(this).attr('id');
+	alert(id);
+});
+</script>
+<?php JSRegister::end(); ?>
+

@@ -77,7 +77,7 @@ class ParaComment extends \yii\db\ActiveRecord
 	public function getCommentTime()
 	{
 
-		$time = time() - strtotime($this->created_at); // to get the time since that moment
+		$time = time() - $this->created_at; // to get the time since that moment
 		$time = ($time<1)? 1 : $time;
 		$tokens = array (
 			31536000 => 'year',
