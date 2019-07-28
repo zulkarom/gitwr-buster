@@ -43,7 +43,7 @@ class CollaSearch extends Project
     {
         $query = Project::find()
 		->innerJoin('project_colla', 'project.id = project_colla.project_id')
-		->where(['project_colla.user_id' => Yii::$app->user->identity->id])
+		->where(['project_colla.user_id' => Yii::$app->user->identity->id, 'project_colla.is_owner' => 0])
 		
 		;
 
