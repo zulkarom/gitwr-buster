@@ -16,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="box-header"></div>
 <div class="box-body"><?= GridView::widget([
         'dataProvider' => $dataProvider,
+		'options' => [ 'style' => 'table-layout:fixed;' ],
         //'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
@@ -26,9 +27,22 @@ $this->params['breadcrumbs'][] = $this->title;
 				}
 			
 			],
-            'title',
-			'pomodoro',
-			'pomo_duration',
+            [
+				'attribute' => 'title',
+				'contentOptions' => [ 'style' => 'width: 40%;' ],
+			]
+            ,
+            //'description:ntext',
+			[
+				'attribute' =>  'pomodoro',
+				'contentOptions' => [ 'style' => 'width: 10%;' ],
+			]
+			,
+			[
+				'attribute' =>  'pomo_duration',
+				'contentOptions' => [ 'style' => 'width: 10%;' ],
+			]
+			,
 			[
 				'attribute' => 'status',
 				'format' => 'html',

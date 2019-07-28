@@ -69,7 +69,7 @@ class Project extends \yii\db\ActiveRecord
 	
 	public function getMainContents()
     {
-        return $this->hasMany(ProjectContent::className(), ['project_id' => 'id'])->where(['ct_parent' => 0, 'ct_active' => 1]);
+        return $this->hasMany(ProjectContent::className(), ['project_id' => 'id'])->where(['ct_parent' => 0, 'ct_active' => 1])->orderBy('ct_order ASC');
     }
 
 	
@@ -84,6 +84,94 @@ class Project extends \yii\db\ActiveRecord
 			}
 		}
 
+	}
+	
+	public function getFulltext(){
+		
+		$content = array();
+		if($this->mainContents){
+			$i = 1;
+			foreach($this->mainContents as $con){
+				$header = new \stdClass();
+				$header->id = $con->id;
+				$header->type = $con->ct_type;
+				$header->text = $con->ct_text;
+				$header->action = 'update';
+				$header->numbering = $i.'.';
+				$content2 = array();
+				if($con->children){
+					
+					$ii= 1;
+					foreach($con->children as $ch1){
+						$header2 = new \stdClass();
+						$header2->id = $ch1->id;
+						$header2->type = $ch1->ct_type;
+						
+						if($ch1->ct_type == 1){
+							$header2->text = $ch1->ct_text;
+							$header2->action = 'update';
+							$header2->numbering = $i . '.' .$ii;
+						}else{
+							$header2->action = 'update-para';
+							$header2->text = $ch1->para->para_text;
+							$header2->numbering = '';
+						}
+						
+						$header2->margin = 20;
+						$content3 = array();
+						if($ch1->children){
+							
+							
+							$iii= 1;
+							foreach($ch1->children as $ch2){
+								$header3 = new \stdClass();
+								$header3->type = $ch2->ct_type;
+								$header3->id = $ch2->id;
+								
+								if($ch2->ct_type == 1){
+									$header3->action = 'update';
+									$header3->text = $ch2->ct_text;
+									$header3->numbering = $i.'.'. $ii . '.' . $iii;
+								}else{
+									$header3->action = 'update-para';
+									$header3->text = $ch2->para->para_text;
+									$header3->numbering = '';
+								}
+								
+								$header3->margin = 40;
+								$content4 = array();
+								if($ch2->children){
+									foreach($ch2->children as $ch3){
+										$para = new \stdClass();
+										$para->id = $ch3->id;
+										$para->type = $ch3->ct_type;
+										$para->text = $ch3->para->para_text;
+										$para->action = 'update-para';
+										$para->margin = 60;
+										$para->numbering = '';
+										$content4[] = $para;
+									}
+									
+								}
+								$header3->children = $content4;
+								$content3[] = $header3;
+							$iii++;
+							}
+						
+						}
+						$header2->children = $content3;
+						$content2[] = $header2;
+					$ii++;
+					}
+				
+				}
+				$header->children = $content2;
+				$content[] = $header;
+			$i++;
+			}
+			
+		}
+		return $content;
 	}
 	
 	public function getStructure(){

@@ -21,14 +21,14 @@ $this->params['breadcrumbs'][] = 'Update';
 ?>
 
 <div class="form-group">
-<?= Html::a('Back Project List', ['/apps/project/index'], ['class' => 'btn btn-info']) ?> 
+<?= Html::a('Back Project Collaboration', ['/apps/project/collaboration'], ['class' => 'btn btn-info']) ?> 
 
 <br /><br />
 
 <div class="box">
 <div class="box-body">
 
-<?=$this->render('_tab', [
+<?=$this->render('_tab-colla', [
        'model' => $model,
     ]);
 ?>

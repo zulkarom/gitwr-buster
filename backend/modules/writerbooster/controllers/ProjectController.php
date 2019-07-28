@@ -148,12 +148,34 @@ class ProjectController extends Controller
         ]);
 	}
 	
+	public function actionReportColla($id){
+		$model = $this->findModel($id);
+		return $this->render('report-colla', [
+			'model' => $model,
+        ]);
+	}
+	
 	public function actionViewColla($id){
 		$model = $this->findModel($id);
 		$colla = new Collaboration;
+		 if ($colla->load(Yii::$app->request->post())) {
+			$colla->project_id = $model->id;
+			$colla->created_at = new Expression('NOW()');
+			if($colla->save()){
+				Yii::$app->session->addFlash('success', "Data Updated");
+				return $this->redirect(['view-colla', 'id' => $model->id]);
+			}
+        }
 		return $this->render('view_colla', [
 			'model' => $model,
 			'colla' => $colla
+        ]);
+	}
+	
+	public function actionViewCollaColla($id){
+		$model = $this->findModel($id);
+		return $this->render('view_colla_colla', [
+			'model' => $model,
         ]);
 	}
 	
@@ -162,14 +184,7 @@ class ProjectController extends Controller
         $model = $this->findModel($id);
 		$colla = new Collaboration;
 		
-        if ($colla->load(Yii::$app->request->post())) {
-			$colla->project_id = $model->id;
-			$colla->created_at = new Expression('NOW()');
-			if($colla->save()){
-				Yii::$app->session->addFlash('success', "Data Updated");
-				return $this->redirect(['structure', 'id' => $model->id]);
-			}
-        }
+       
 		
         return $this->render('structure', [
             'model' => $model,
@@ -183,6 +198,16 @@ class ProjectController extends Controller
         $model = $this->findModel($id);
 		
         return $this->render('fulltext', [
+            'model' => $model,
+        ]);
+		
+    }
+	
+	public function actionFulltextColla($id)
+    {
+        $model = $this->findModel($id);
+		
+        return $this->render('fulltext-colla', [
             'model' => $model,
         ]);
 		

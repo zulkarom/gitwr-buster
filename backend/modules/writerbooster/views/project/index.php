@@ -21,15 +21,32 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="box-header"></div>
 <div class="box-body"><?= GridView::widget([
         'dataProvider' => $dataProvider,
+		'options' => [ 'style' => 'table-layout:fixed;' ],
         //'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            'title',
-            'description:ntext',
-			'pomodoro',
-			'pomo_duration',
+            [
+			'class' => 'yii\grid\SerialColumn',
+			'contentOptions' => [ 'style' => 'width: 5%;']
+			],
+			[
+				'attribute' => 'title',
+				'contentOptions' => [ 'style' => 'width: 45%;' ],
+			]
+            ,
+            //'description:ntext',
+			[
+				'attribute' =>  'pomodoro',
+				'contentOptions' => [ 'style' => 'width: 10%;' ],
+			]
+			,
+			[
+				'attribute' =>  'pomo_duration',
+				'contentOptions' => [ 'style' => 'width: 10%;' ],
+			]
+			,
 			[
 				'attribute' => 'status',
+				'contentOptions' => [ 'style' => 'width: 10%;' ],
 				'format' => 'html',
 				'value' => function($model){
 					$text = $model->status == 1 ? 'COMPLETED' : 'IN PROGRESS';
@@ -38,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				
 			],
             ['class' => 'yii\grid\ActionColumn',
-                 'contentOptions' => ['style' => 'width: 10%'],
+                 //'contentOptions' => ['style' => 'width: 10%'],
                 'template' => '{writing} {setting} {delete}',
                 //'visible' => false,
                 'buttons'=>[
