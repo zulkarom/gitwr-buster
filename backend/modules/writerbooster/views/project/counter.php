@@ -14,20 +14,24 @@ $this->title = 'WRITERBOOSTER TIMER';
 #counter{ width: 240px; height: 45px; }
 body {font-family: verdana}
 </style>
+<audio id="audio-begin">
+  <source src="<?=$directoryAsset?>/audio/begin_session.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
 <audio id="audio-start">
-  <source src="<?=$directoryAsset?>/audio/horn.mp3" type="audio/mpeg">
+  <source src="<?=$directoryAsset?>/audio/bismillah.mp3" type="audio/mpeg">
   Your browser does not support the audio element.
 </audio>
 <audio id="audio-rest">
-  <source src="<?=$directoryAsset?>/audio/whistle.mp3" type="audio/mpeg">
+  <source src="<?=$directoryAsset?>/audio/time_rest.mp3" type="audio/mpeg">
   Your browser does not support the audio element.
 </audio>
 <audio id="audio-alarm">
-  <source src="<?=$directoryAsset?>/audio/alarm.mp3" type="audio/mpeg">
+  <source src="<?=$directoryAsset?>/audio/continue_writing.mp3" type="audio/mpeg">
   Your browser does not support the audio element.
 </audio>
 <audio id="audio-applause">
-  <source src="<?=$directoryAsset?>/audio/applause.mp3" type="audio/mpeg">
+  <source src="<?=$directoryAsset?>/audio/congrat.mp3" type="audio/mpeg">
   Your browser does not support the audio element.
 </audio>
 <div align="center">
@@ -40,7 +44,7 @@ body {font-family: verdana}
 <p>
 <button id="initiate">Start Session</button>
 <button id="pauseButton" style="display:none">Pause</button>
-<button id="resumeWrite" style="display:none">Resume Writing</button>
+<button id="resumeWrite" style="display:none">Start</button>
 </p>
 
 <img id="img-write" src="<?=$directoryAsset?>/img/write.jpg" width="100" />
@@ -93,7 +97,7 @@ $('#initiate').click(function(){
 	
 	$('#pauseButton').click(function() { 
 		var pause = $(this).text() === 'Pause'; 
-		$(this).text(pause ? 'Resume' : 'Pause'); 
+		$(this).text(pause ? 'Start' : 'Pause'); 
 		$('#counter').countdown(pause ? 'pause' : 'resume'); 
 	}); 
 
@@ -104,6 +108,7 @@ var au_start = document.getElementById("audio-start");
 var au_stop = document.getElementById("audio-rest"); 
 var au_alarm = document.getElementById("audio-alarm"); 
 var au_applause = document.getElementById("audio-applause"); 
+var au_begin = document.getElementById("audio-begin"); 
 
 function playStart() { 
   au_start.play(); 
@@ -123,17 +128,15 @@ function playApplause() {
   au_applause.play(); 
 } 
 
+function playBegin() { 
+  au_begin.play(); 
+} 
 
-/* $(function () {
-	//write();
-	
-	$('#pauseButton').click(function() { 
-		var pause = $(this).text() === 'Pause'; 
-		$(this).text(pause ? 'Resume' : 'Pause'); 
-		$('#counter').countdown(pause ? 'pause' : 'resume'); 
-	}); 
 
-}); */
+ $(function () {
+	playBegin();
+
+}); 
 
 function write(){
 	playStart();
