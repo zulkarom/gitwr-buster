@@ -281,6 +281,7 @@ class ProjectController extends Controller
      */
     public function actionDelete($id)
     {
+		Collaboration::deleteAll(['project_id' => $id]);
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
