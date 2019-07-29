@@ -41,7 +41,7 @@ class Project extends \yii\db\ActiveRecord
 			
 			[['content'], 'required', 'on' => 'content'],
 			
-            [['user_id', 'status', 'pomodoro', 'pomo_long_break', 'default_session'], 'integer'],
+            [['user_id', 'status', 'pomo_long_break', 'default_session'], 'integer'],
             [['description'], 'string'],
             [['project_duration', 'pomo_duration', 'short_break', 'long_break'], 'safe'],
             [['title'], 'string', 'max' => 200],
