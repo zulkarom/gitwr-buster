@@ -21,7 +21,10 @@ use yii\widgets\ActiveForm;
 
 <div class="col-md-6">
 <?php 
-$model->default_session = 5;
+if($model->default_session == null){
+	$model->default_session = 5;
+}
+
 echo $form->field($model, 'default_session')->textInput() 
 ?>
 </div>
@@ -32,13 +35,19 @@ echo $form->field($model, 'default_session')->textInput()
 	
 	<div class="row">
 <div class="col-md-6"><?php 
-$model->pomo_duration = '00:30:00';
+if($model->pomo_duration == null){
+	$model->pomo_duration = '00:30:00';
+}
+
 echo $form->field($model, 'pomo_duration')->textInput() 
 
 ?></div>
 
 <div class="col-md-6"><?php 
-$model->pomo_long_break = 3;
+if($model->pomo_long_break == null){
+	$model->pomo_long_break = 3;
+}
+
 echo $form->field($model, 'pomo_long_break')->textInput() 
 ?>
 </div>
@@ -47,12 +56,18 @@ echo $form->field($model, 'pomo_long_break')->textInput()
 
 <div class="row">
 <div class="col-md-6"><?php 
-$model->short_break = '00:05:00';
+if($model->short_break == null){
+	$model->short_break = '00:05:00';
+}
+
 echo $form->field($model, 'short_break')->textInput();
 ?></div>
 
 <div class="col-md-6"><?php 
-$model->long_break = '00:15:00';
+if($model->long_break == null){
+	$model->long_break = '00:15:00';
+}
+
 echo $form->field($model, 'long_break')->textInput() 
 ?>
 </div>

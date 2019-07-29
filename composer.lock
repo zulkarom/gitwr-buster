@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9b872a47d237415408fc5cb1a7cf7c4a",
+    "content-hash": "c5de89c610df26829d704785c80fb9a1",
     "packages": [
         {
             "name": "2amigos/yii2-chartjs-widget",
@@ -248,12 +248,12 @@
             "version": "v2.4.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/almasaeed2010/AdminLTE.git",
+                "url": "https://github.com/ColorlibHQ/AdminLTE.git",
                 "reference": "b3acb63ac56b13eb45b36e628b384a9a2507b50e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/almasaeed2010/AdminLTE/zipball/b3acb63ac56b13eb45b36e628b384a9a2507b50e",
+                "url": "https://api.github.com/repos/ColorlibHQ/AdminLTE/zipball/b3acb63ac56b13eb45b36e628b384a9a2507b50e",
                 "reference": "b3acb63ac56b13eb45b36e628b384a9a2507b50e",
                 "shasum": ""
             },
@@ -291,7 +291,7 @@
             "version": "v3.14.0",
             "source": {
                 "type": "git",
-                "url": "git@github.com:blueimp/JavaScript-Canvas-to-Blob.git",
+                "url": "https://github.com/blueimp/JavaScript-Canvas-to-Blob.git",
                 "reference": "9f3deb2e710d39c72a988559609d9dc9a319de0b"
             },
             "dist": {
@@ -330,7 +330,7 @@
             "version": "v2.17.0",
             "source": {
                 "type": "git",
-                "url": "git@github.com:blueimp/Gallery.git",
+                "url": "https://github.com/blueimp/Gallery.git",
                 "reference": "8336bb5934cb623608808601129db3fbf9201a09"
             },
             "dist": {
@@ -360,7 +360,7 @@
             "version": "v3.11.0",
             "source": {
                 "type": "git",
-                "url": "git@github.com:blueimp/JavaScript-Templates.git",
+                "url": "https://github.com/blueimp/JavaScript-Templates.git",
                 "reference": "da7647cb93fff2030e73a701db22c66de76a9919"
             },
             "dist": {
@@ -436,7 +436,7 @@
             "version": "v1.3.6",
             "source": {
                 "type": "git",
-                "url": "git@github.com:bernii/gauge.js.git",
+                "url": "https://github.com/bernii/gauge.js.git",
                 "reference": "df79eb699ae33529509fee5e14914c4d4186b00f"
             },
             "dist": {
@@ -514,7 +514,7 @@
             "version": "v1.3.2",
             "source": {
                 "type": "git",
-                "url": "git@github.com:bestiejs/punycode.js.git",
+                "url": "https://github.com/bestiejs/punycode.js.git",
                 "reference": "38c8d3131a82567bfef18da09f7f4db68c84f8a3"
             },
             "dist": {
@@ -3151,6 +3151,51 @@
                 "pdf"
             ],
             "time": "2017-05-11T14:25:49+00:00"
+        },
+        {
+            "name": "sjaakp/yii2-gcharts",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sjaakp/yii2-gcharts.git",
+                "reference": "caf7ca1ca052f0ec8192bd8c78aab5bb5ee1ec6d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sjaakp/yii2-gcharts/zipball/caf7ca1ca052f0ec8192bd8c78aab5bb5ee1ec6d",
+                "reference": "caf7ca1ca052f0ec8192bd8c78aab5bb5ee1ec6d",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "sjaakp\\gcharts\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sjaak Priester",
+                    "email": "sjaak@sjaakpriester.nl",
+                    "homepage": "http://sjaakpriester.nl"
+                }
+            ],
+            "description": "Google Charts the Yii 2.0 way",
+            "keywords": [
+                "charts",
+                "extension",
+                "visualization",
+                "widget",
+                "yii",
+                "yii2"
+            ],
+            "time": "2017-09-17T11:41:34+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
