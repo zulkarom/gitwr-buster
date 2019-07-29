@@ -72,12 +72,12 @@ body {font-family: verdana}
 }
 
 </style>
-<p>Targeted Session: <input type="number" class="rcorners" id="target-pomo" value="<?=$model->default_session?>" /></p>
+<p>Targeted Session: <input type="number" class="rcorners inputset" id="target-pomo" value="<?=$model->default_session?>" /></p>
 
-<p>Session Duration: <input type="text" id="session-duration" class="rcorners-time" value="<?=$model->pomo_duration?>" /></p>
-<p>Short Break: <input type="text" id="short-break" class="rcorners-time" value="<?=$model->short_break?>" /></p>
-<p>Long Break after <input type="number" id="input-long-break" class="rcorners" value="3" /> Session</p>
-<p>Long Break Duration: <input type="text" id="long-break" class="rcorners-time" value="<?=$model->long_break?>" /> </p>
+<p>Session Duration: <input type="text" id="session-duration" class="rcorners-time inputset" value="<?=$model->pomo_duration?>" /></p>
+<p>Short Break: <input type="text" id="short-break" class="rcorners-time inputset" value="<?=$model->short_break?>" /></p>
+<p>Long Break after <input type="number" id="input-long-break" class="rcorners inputset" value="3" /> Session</p>
+<p>Long Break Duration: <input type="text" id="long-break" class="rcorners-time inputset" value="<?=$model->long_break?>" /> </p>
 
 <input id="pomo-after-rest-long" type="hidden" value="0" />
 
@@ -90,7 +90,7 @@ body {font-family: verdana}
 <script>
 
 $('#initiate').click(function(){
-	$("input.rcorners").prop('disabled', true);
+	$("input.inputset").prop('disabled', true);
 	$(this).hide();
 	$('#pauseButton').show();
 	write();
@@ -269,7 +269,7 @@ function checkPomodoro(){
 		$('#counter').hide();
 		$("#img-write").hide();
 		$("#img-congrats").show();
-		$("input.rcorners").prop('disabled', false);
+		$("input.inputset").prop('disabled', false);
 		return false
 	}
 	return true;
