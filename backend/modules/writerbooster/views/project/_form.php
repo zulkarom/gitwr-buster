@@ -8,13 +8,26 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="project-form">
+<div class="box">
+<div class="box-header"></div>
+<div class="box-body">
 
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+	
+</div></div>
+
+
+
+<div class="box">
+<div class="box-header">
+<div class="box-title">Time Keeper Setting</div>
+</div>
+<div class="box-body">
+
 	
 	<div class="row">
 <div class="col-md-6"><?= $form->field($model, 'status')->dropDownList( [0 => 'In Progress', 1 => 'Completed'] ) ?></div>
@@ -74,17 +87,21 @@ echo $form->field($model, 'long_break')->textInput()
 
 </div>
 	
+
+
+    
+
+    <?php ActiveForm::end(); ?>
+
+</div>
+</div>
+
+
 	<div class="row">
 <div class="col-md-6"><div class="form-group">
         <?= Html::submitButton('Save Project Setting', ['class' => 'btn btn-success']) ?>
     </div></div>
 
 
-
-</div>
-
-    
-
-    <?php ActiveForm::end(); ?>
 
 </div>

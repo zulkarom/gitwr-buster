@@ -36,7 +36,7 @@ use dmstr\widgets\Alert;
 </div>
 
 <footer class="main-footer">
-    Copyright &copy; 2018 <a href="#">iFalah</a>. All rights
+    Copyright &copy; 2019 iFalah Academic Writing Platform. All rights
     reserved.
 </footer>
 

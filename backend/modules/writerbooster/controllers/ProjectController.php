@@ -156,6 +156,12 @@ class ProjectController extends Controller
         ]);
     }
 	
+	public function actionTemplate()
+    {
+        return $this->render('template', [
+        ]);
+    }
+	
 	public function actionCounter($id)
     {
 		$this->layout = 'counter';

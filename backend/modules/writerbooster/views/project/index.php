@@ -14,7 +14,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     <p>
-         <?= Html::a('Create Project', ['create'], ['class' => 'btn btn-success']) ?>
+         <?= Html::a('Create Empty Project', ['create'], ['class' => 'btn btn-primary']) ?>
+		 
+		 <?= Html::a('Duplicate Project', ['create'], ['class' => 'btn btn-warning']) ?> 
+		 
+		 <?= Html::a('Template Guideline', ['template'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <div class="box">
@@ -62,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
 					'delete'=>function ($url, $model) {
                         return Html::a('<span class="glyphicon glyphicon-trash"></span>',['/apps/project/delete', 'id' => $model->id],['class'=>'btn btn-danger btn-sm', 'data' => [
-                'confirm' => 'Are you sure to delete this event?'
+                'confirm' => 'Are you sure to delete this project?'
             ],
 ]);
                     }
