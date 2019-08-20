@@ -8,9 +8,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="box">
-<div class="box-header"></div>
-<div class="box-body">
+
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -93,8 +91,7 @@ echo $form->field($model, 'long_break')->textInput()
 
     <?php ActiveForm::end(); ?>
 
-</div>
-</div>
+
 
 
 	<div class="row">

@@ -4,9 +4,12 @@ namespace backend\modules\writerbooster\controllers;
 
 use Yii;
 use backend\modules\writerbooster\models\Project;
+use backend\modules\writerbooster\models\ProjectContent;
+use backend\modules\writerbooster\models\ProjectPara;
 use backend\modules\writerbooster\models\ProjectSearch;
 use backend\modules\writerbooster\models\CollaSearch;
 use backend\modules\writerbooster\models\Collaboration;
+use backend\modules\writerbooster\models\Template;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -156,11 +159,106 @@ class ProjectController extends Controller
         ]);
     }
 	
-	public function actionTemplate()
+	public function actionTemplate($id = null)
     {
+		$items = [];
+		if($id){
+			$items = Template::find()->where(['cat_id' => $id])->all();
+		}
+		
         return $this->render('template', [
+			'cat' => $id,
+			'items' => $items
         ]);
     }
+	
+	public function actionProcessTemplate($id)
+    {
+		$transaction = Yii::$app->db->beginTransaction();
+        try {
+			$template = Template::findOne($id);
+			$project = new Project;
+			$project->user_id = Yii::$app->user->identity->id;
+			$project->title = $template->tem_name;
+			$project->description = $template->category->cat_name;
+			$project->save();
+			
+			$tem_content = $template->contents;
+			if($tem_content){
+				
+				foreach($tem_content as $tc){
+					if($tc->ct_parent == 0){
+						$con = new ProjectContent;
+						$con->project_id = $project->id;
+						$con->ct_parent = 0;
+						$con->ct_text = $tc->ct_text;
+						$con->ct_desc = $tc->ct_desc;
+						$con->ct_type = $tc->ct_type;
+						$con->created_by = Yii::$app->user->identity->id;
+						$con->created_at = new Expression('NOW()');
+						$con->updated_at = new Expression('NOW()');
+						$con->save();
+							if($tc->ct_type == 2){
+								$para = new ProjectPara;
+								$para->content_id = $con->id;
+								$para->para_text = $tc->para->para_text;
+								$para->created_at = new Expression('NOW()');
+								$para->updated_at = new Expression('NOW()');
+								if(!$para->save()){
+									$para->flashError();
+									
+								}
+							}
+						$parent = $con->id;
+						$children = $tc->children;
+						if($children){
+							foreach($children as $child){
+								$con = new ProjectContent;
+								$con->project_id = $project->id;
+								$con->ct_parent = $parent;
+								$con->ct_text = $child->ct_text;
+								$con->ct_desc = $child->ct_desc;
+								$con->ct_type = $child->ct_type;
+								$con->created_by = Yii::$app->user->identity->id;
+								$con->created_at = new Expression('NOW()');
+								$con->updated_at = new Expression('NOW()');
+								$con->save();
+									if($child->ct_type == 2){
+										$para = new ProjectPara;
+										$para->content_id = $con->id;
+										$para->para_text = $child->para->para_text;
+										$para->created_at = new Expression('NOW()');
+										$para->updated_at = new Expression('NOW()');
+										if(!$para->save()){
+											$para->flashError();
+											
+										}
+									}
+							}
+						}
+					}
+					
+					
+				}
+			}
+			
+            
+            $transaction->commit();
+			return $this->redirect(['structure', 'id' =>$project->id]);
+            
+        }
+        catch (Exception $e) 
+        {
+            $transaction->rollBack();
+            Yii::$app->session->addFlash('error', $e->getMessage());
+        }
+
+
+
+		
+    }
+	
+
 	
 	public function actionCounter($id)
     {
@@ -287,6 +385,7 @@ class ProjectController extends Controller
      */
     public function actionDelete($id)
     {
+		ProjectContent::deleteAll(['project_id' => $id]);
 		Collaboration::deleteAll(['project_id' => $id]);
         $this->findModel($id)->delete();
 
