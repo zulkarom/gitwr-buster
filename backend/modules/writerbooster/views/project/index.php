@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
          <?= Html::a('Create Empty Project', ['create'], ['class' => 'btn btn-primary']) ?>
 		 
-		 <?= Html::a('Duplicate Project', ['create'], ['class' => 'btn btn-warning']) ?> 
+	
 		 
 		 <?= Html::a('Template Guideline', ['template'], ['class' => 'btn btn-success']) ?>
     </p>

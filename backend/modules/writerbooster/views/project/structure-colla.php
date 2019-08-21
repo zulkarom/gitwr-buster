@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = 'Update';
 ?>
 
 <div class="form-group">
-<?= Html::a('Back Project Collaboration', ['/apps/project/collaboration'], ['class' => 'btn btn-info']) ?> 
+<?= Html::a('Back Project Collaboration', ['/apps/project/colla'], ['class' => 'btn btn-info']) ?> 
 
 <br /><br />
 
