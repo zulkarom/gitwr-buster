@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = 'Update';
 <div class="box">
 <div class="box-body">
 
-<?=$this->render('_tab-colla', [
+<?=$this->render('_tab', [
        'model' => $model,
     ]);
 ?>
@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
 
 <div class="row">
-<div class="col-md-8" class="confull">
+<div class="col-md-12" class="confull">
 <br />
 
 
@@ -44,7 +44,27 @@ $this->params['breadcrumbs'][] = 'Update';
 <h2>Title: <?=$model->title?></h2>
 <?=$model->description?>
 <br />
-
+<style>
+a.close {
+    display:none
+}
+.block-comment{
+	background-color:#fffee6;
+	padding:10px;
+	border-radius: 10px;
+	-webkit-box-shadow: 3px 3px 2px -2px rgba(0,0,0,0.75);
+-moz-box-shadow: 3px 3px 2px -2px rgba(0,0,0,0.75);
+box-shadow: 3px 3px 2px -2px rgba(0,0,0,0.75);
+}
+.block-comment-my{
+	background-color:#cafbc4;
+	padding:10px;
+	border-radius: 10px;
+	-webkit-box-shadow: 3px 3px 2px -2px rgba(0,0,0,0.75);
+-moz-box-shadow: 3px 3px 2px -2px rgba(0,0,0,0.75);
+box-shadow: 3px 3px 2px -2px rgba(0,0,0,0.75);
+}
+</style>
 
 <?php 
 if($model->fulltext){
@@ -52,14 +72,13 @@ if($model->fulltext){
 		echo '<div class="form-group"><a href="'.Url::to(['/apps/project-content/' . $con->action, 'id' => $con->id ,'project_id' => $model->id]).'"><h3><b><span class="cancel">' . $con->numbering  . ' </span> ' . $con->text . '</b></h3></a></div>';
 		if($con->children){
 			foreach($con->children as $ch1){
-				echo '<div class="form-group" style="text-align:justify;"><a href="'.Url::to(['/apps/project-content/' . $ch1->action, 'id' => $ch1->id ,'project_id' => $model->id]).'" style="color:#000"><h4><span class="cancel">' . $ch1->numbering . '</span> ' . $ch1->text . '</h4></a></div>';
-				
+				show_content($model->id, $ch1);
 				if($ch1->children){
 					foreach($ch1->children as $ch2){
-						echo '<div class="form-group" style="text-align:justify"><a href="'.Url::to(['/apps/project-content/' . $ch2->action, 'id' => $ch2->id ,'project_id' => $model->id]).'" style="color:#000"><h4><span class="cancel">' . $ch2->numbering . '</span> ' . $ch2->text . '</h4></a></div>';
+						show_content($model->id, $ch2);
 						if($ch2->children){
 							foreach($ch2->children as $ch3){
-								echo '<div class="form-group" style="text-align:justify"><a href="'.Url::to(['/apps/project-content/'.$ch3->action , 'id' => $ch3->id ,'project_id' => $model->id]).'" style="color:#000"><h4><span class="cancel">' . $ch3->numbering . '</span> ' . $ch3->text . '</h4></a></div>';
+								show_content($model->id, $ch3);
 							}
 						}
 					}
@@ -68,6 +87,26 @@ if($model->fulltext){
 		}
 	}
 	
+}
+
+
+function show_content($project, $para){
+	echo '<div class="row">
+	<div class="col-md-8"><div class="form-group" style="text-align:justify"><a href="'.Url::to(['/apps/project-content/'.$para->action , 'id' => $para->id ,'project_id' => $project]).'" style="color:#000"><h4><span class="cancel">' . $para->numbering . '</span> ' . $para->text . '</h4></a></div></div>
+	<div class="col-md-4">
+	<h3>
+	<a href="'.Url::to(['/apps/project-content/update-para', 'id'=> $para->id, 'project_id' => $project]).'">
+	<i class="fa fa-pencil"></i>
+	</a>
+	<i class="fa fa-commenting-o"></i></h3>
+	';
+	
+	echo $para->comments;
+	
+	
+	echo '</div>
+	
+	</div>';
 }
 
 ?>
