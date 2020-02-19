@@ -16,15 +16,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 	
-</div></div>
 
 
 
-<div class="box">
-<div class="box-header">
-<div class="box-title">Time Keeper Setting</div>
-</div>
-<div class="box-body">
 
 	
 	<div class="row">
@@ -87,9 +81,8 @@ echo $form->field($model, 'long_break')->textInput()
 	
 
 
-    
 
-    <?php ActiveForm::end(); ?>
+  
 
 
 
@@ -102,3 +95,6 @@ echo $form->field($model, 'long_break')->textInput()
 
 
 </div>
+
+
+  <?php ActiveForm::end(); ?>

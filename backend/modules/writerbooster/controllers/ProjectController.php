@@ -148,10 +148,17 @@ class ProjectController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+		$model->scenario = 'project';
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			Yii::$app->session->addFlash('success', "Data Updated");
-            return $this->redirect(['update', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+			
+			if($model->save()){
+				Yii::$app->session->addFlash('success', "Data Updated");
+				return $this->redirect(['update', 'id' => $model->id]);
+			}else{
+				$model->flashError();
+			}
+			
         }
 
         return $this->render('update', [

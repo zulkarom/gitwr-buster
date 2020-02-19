@@ -18,12 +18,15 @@ $this->params['breadcrumbs'][] = 'Update';
 ?>
 <br />
 
+
 <div class="project-update">
 
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
 
-</div></div>
+
+
 </div>
 
+</div></div>
