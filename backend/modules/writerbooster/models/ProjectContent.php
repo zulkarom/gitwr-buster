@@ -77,6 +77,12 @@ class ProjectContent extends \yii\db\ActiveRecord
         return $this->hasOne(ProjectPara::className(), ['content_id' => 'id']);
     }
 	
+	public function getCommentsText(){
+		if($this->para){
+			return $this->para->commentsHtml;
+		}
+	}
+	
 	public function getChildren(){
 		 return $this->hasMany(ProjectContent::className(), ['ct_parent' => 'id'])->where(['ct_active' => 1])->orderBy('ct_order ASC');
 	}

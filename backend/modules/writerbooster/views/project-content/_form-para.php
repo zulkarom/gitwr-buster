@@ -132,7 +132,7 @@ box-shadow: 3px 3px 2px -2px rgba(0,0,0,0.75);
 <div>
 
 <div align="right"><div class="form-group">
-	<?= Html::a('Delete', ['delete', 'project_id' => $project->id, 'id' => $model->id], [
+	<?= Html::a('<i></i>', ['delete', 'project_id' => $project->id, 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this paragraph?',

@@ -3,7 +3,7 @@
 use yii\helpers\Url;
 
 $arr = [
-	['Writing Zone','structure-colla'],
+	['Outline','structure-colla'],
 	['Full Text', 'fulltext-colla'],
 	['Collaboration', 'view-colla-colla'],
 	['Report', 'report-colla'], 

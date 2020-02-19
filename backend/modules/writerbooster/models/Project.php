@@ -115,10 +115,13 @@ class Project extends \yii\db\ActiveRecord
 							$header2->text = $ch1->ct_text;
 							$header2->action = 'update';
 							$header2->numbering = $i . '.' .$ii;
+							$header2->comments = $ch1->commentsText;
 						}else{
 							$header2->action = 'update-para';
 							$header2->text = $ch1->para->para_text;
 							$header2->numbering = '';
+							$header2->comments = $ch1->commentsText;
+							
 						}
 						
 						$header2->margin = 20;
@@ -136,10 +139,12 @@ class Project extends \yii\db\ActiveRecord
 									$header3->action = 'update';
 									$header3->text = $ch2->ct_text;
 									$header3->numbering = $i.'.'. $ii . '.' . $iii;
+									$header3->comments = $ch2->commentsText;
 								}else{
 									$header3->action = 'update-para';
 									$header3->text = $ch2->para->para_text;
 									$header3->numbering = '';
+									$header3->comments = $ch2->commentsText;
 								}
 								
 								$header3->margin = 40;
@@ -153,6 +158,7 @@ class Project extends \yii\db\ActiveRecord
 										$para->action = 'update-para';
 										$para->margin = 60;
 										$para->numbering = '';
+										$para->comments = $ch3->commentsText;
 										$content4[] = $para;
 									}
 									

@@ -65,6 +65,8 @@ class ParaComment extends \yii\db\ActiveRecord
     {
         return $this->hasOne(ProjectPara::className(), ['id' => 'para_id']);
     }
+	
+	
 
     /**
      * @return \yii\db\ActiveQuery

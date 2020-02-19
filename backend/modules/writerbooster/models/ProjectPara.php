@@ -69,14 +69,17 @@ class ProjectPara extends \yii\db\ActiveRecord
         return $this->hasMany(ParaComment::className(), ['para_id' => 'id'])->orderBy('created_at ASC');
     }
 	
+	
+	
 	public function getCommentsHtml()
     {
 		$html = '';
+		// - '.$com->commentTime .'
         if($this->comments){
 			$html .= '<table class="table table-stripped">';
 			foreach($this->comments as $com){
 				$html .= '<tr><td>
-				<i style="font-size:12px"><strong>'.$com->user->fullname .'</strong> - '.$com->commentTime .'</i>';
+				<i style="font-size:12px"><strong>'.$com->user->fullname .'</strong></i>';
 				$class = 'block-comment';
 				$close='';
 				if($com->user_id == Yii::$app->user->identity->id){
