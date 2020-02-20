@@ -18,6 +18,8 @@ $this->title = 'Project Update';
 
 $this->params['breadcrumbs'][] = ['label' => 'Projects', 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'Update';
+
+$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@backend/views/myasset');
 ?>
 
 <div class="form-group">
@@ -28,7 +30,7 @@ $this->params['breadcrumbs'][] = 'Update';
 <div class="box">
 <div class="box-body">
 
-<?=$this->render('_tab', [
+<?=$this->render('_tab-colla', [
        'model' => $model,
     ]);
 ?>
@@ -39,10 +41,20 @@ $this->params['breadcrumbs'][] = 'Update';
 <div class="col-md-12" class="confull">
 <br />
 
+<div class="row">
+<div class="col-md-8"><h2>Title: <?=$model->title?></h2>
 
 
-<h2>Title: <?=$model->title?></h2>
-<?=$model->description?>
+<?=$model->description?></div>
+
+<div class="col-md-4">
+<a href="https://app.grammarly.com/" target="_blank"><img src="<?=$directoryAsset?>/img/grammarly.png" /></a>
+<a href="https://www.turnitin.com/" target="_blank"><img src="<?=$directoryAsset?>/img/turnitin.png" /></a>
+</div>
+
+</div>
+
+
 <br />
 <style>
 a.close {
@@ -95,7 +107,7 @@ function show_content($project, $para){
 	<div class="col-md-8"><div class="form-group" style="text-align:justify"><a href="'.Url::to(['/apps/project-content/'.$para->action , 'id' => $para->id ,'project_id' => $project]).'" style="color:#000"><h4><span class="cancel">' . $para->numbering . '</span> ' . $para->text . '</h4></a></div></div>
 	<div class="col-md-4">
 	<h3>
-	<a href="'.Url::to(['/apps/project-content/update-para', 'id'=> $para->id, 'project_id' => $project]).'">
+	<a href="'.Url::to(['/apps/project-content/update-para-colla', 'id'=> $para->id, 'project_id' => $project]).'">
 	<i class="fa fa-pencil"></i>
 	</a>
 	<i class="fa fa-commenting-o"></i></h3>

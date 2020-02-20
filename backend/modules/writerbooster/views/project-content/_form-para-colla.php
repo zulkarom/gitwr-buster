@@ -10,8 +10,16 @@ use richardfan\widget\JSRegister;
 
 ?>
 <div class="box">
-<div class="box-header"></div>
-<div class="box-body"><div class="project-content-form">
+<div class="box-body">
+
+<?=$this->render('../project/_tab-colla', [
+       'model' => $project,
+    ]);
+?>
+<br /><br />
+
+
+<div class="project-content-form">
 
 <?php $form = ActiveForm::begin(); ?>
 

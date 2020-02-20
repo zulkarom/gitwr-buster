@@ -18,10 +18,14 @@ $this->title = 'Project Update';
 
 $this->params['breadcrumbs'][] = ['label' => 'Projects', 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'Update';
+
+$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@backend/views/myasset');
+
 ?>
 
 <div class="form-group">
 <?= Html::a('Back Project List', ['/apps/project/index'], ['class' => 'btn btn-info']) ?> 
+
 
 <br /><br />
 
@@ -33,16 +37,28 @@ $this->params['breadcrumbs'][] = 'Update';
     ]);
 ?>
 
+<br />
 
 
 <div class="row">
 <div class="col-md-12" class="confull">
-<br />
 
 
+<div class="row">
+<div class="col-md-8"><h2>Title: <?=$model->title?></h2>
 
-<h2>Title: <?=$model->title?></h2>
-<?=$model->description?>
+
+<?=$model->description?></div>
+
+<div class="col-md-14">
+
+<a href="https://app.grammarly.com/" target="_blank"><img src="<?=$directoryAsset?>/img/grammarly.png" /></a>
+<a href="https://www.turnitin.com/" target="_blank"><img src="<?=$directoryAsset?>/img/turnitin.png" /></a>
+</div>
+
+</div>
+
+
 <br />
 <style>
 a.close {
